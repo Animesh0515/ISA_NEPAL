@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'screens.dart';
+import 'dart:io';
 
 void main() {
+  HttpOverrides.global = new MyHttpOverrides();
+  runApp(MyApp());
   runApp(MyApp());
 }
 
@@ -20,5 +23,14 @@ class MyApp extends StatelessWidget {
       ),
       home: LoginScreen(),
     );
+  }
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }

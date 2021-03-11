@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:isa_nepal/LoginScreen.dart';
 import 'package:isa_nepal/pallete.dart';
 import 'package:isa_nepal/widgets/Rounded-button.dart';
 
@@ -9,6 +10,7 @@ class Mainpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      //debugShowCheckedModeBanner:false
       children: <Widget>[
         Container(
           height: 500,
@@ -24,12 +26,12 @@ class Mainpage extends StatelessWidget {
             ),
           ),
         ),
-        RaisedButton(
-          child: Text("Open Link"),
-          onPressed: () {
-            launchurl(URL);
-          },
-        ),
+        // RaisedButton(
+        //   child: Text("Open Link"),
+        //   onPressed: () {
+        //     launchurl(URL);
+        //   },
+        // ),
         /*ShaderMask(
             shaderCallback: (rect) => LinearGradient(
               begin: Alignment.bottomCenter,
@@ -48,31 +50,44 @@ class Mainpage extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(130, 470, 0, 0),
-          child: RoundedButton(
-            buttonName: 'Login',
-            buttonColor: kBlue,
-          ),
-          // child: Container(
-          //   height: 50,
-          //   width: 150,
-          //   decoration: BoxDecoration(
-          //     borderRadius: BorderRadius.circular(5),
-          //     color: kBlue,
-          //   ),
-          //   child: FlatButton(
-          //     onPressed: () {
-          //       //   launchurl(URL);
-          //     },
-          //     child: GestureDetector(
-          //       onTap: () => Navigator.pushNamed(context, 'Loginscreen'),
-          //       child: Text(
-          //         'Login',
-          //         style: kBodyText.copyWith(fontWeight: FontWeight.bold),
-          //       ),
-          //     ),
-          //   ),
-          // ),
+          child: FlatButton(
+              child: Text(
+                'Login',
+                style: kBodyText.copyWith(fontWeight: FontWeight.bold),
+              ),
+              color: kBlue,
+              // buttonName: 'Login',
+              // buttonColor: kBlue,
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
+              }
+
+              // buttonName: 'Login',
+              // buttonColor: kBlue,
+              ),
         ),
+        Container(
+          height: 50,
+          width: 150,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: kBlue,
+          ),
+          child: FlatButton(
+            onPressed: () {
+              //   launchurl(URL);
+            },
+            child: GestureDetector(
+              onTap: () => Navigator.pushNamed(context, 'LoginScreen'),
+              child: Text(
+                'Login',
+                style: kBodyText.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ),
+
         Padding(
           padding: const EdgeInsets.fromLTRB(130, 550, 0, 0),
           child: RoundedButton(
