@@ -2,17 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:isa_nepal/Mainpage.dart';
 import 'package:isa_nepal/pallete.dart';
+import 'package:isa_nepal/screens.dart';
 
 import 'api/api_services.dart';
 import 'model/login_model.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   bool hidepassword = true;
+
   LoginRequestModel loginRequestModel = new LoginRequestModel();
-  TextEditingController emailcontroller = new TextEditingController();
+
+  TextEditingController usernamecontroller = new TextEditingController();
+
   TextEditingController passwordcontroller = new TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
+
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  bool userNameValidate = false;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -38,10 +52,15 @@ class LoginScreen extends StatelessWidget {
           ],
         ),
         Scaffold(
+          resizeToAvoidBottomPadding: false,
           key: _scaffoldKey,
           backgroundColor: Colors.transparent,
+
           body: Column(
             children: [
+              SizedBox(
+                height: 30,
+              ),
               Flexible(
                 child: Center(
                   key: _formKey,
@@ -66,19 +85,21 @@ class LoginScreen extends StatelessWidget {
                   // ),
                   child: Center(
                     child: TextField(
-                      controller: emailcontroller,
+                      controller: usernamecontroller,
 
                       decoration: InputDecoration(
                         enabledBorder: const OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20.0)),
                             borderSide: const BorderSide(color: Colors.grey)),
+                        errorText:
+                            userNameValidate ? 'Please enter a Username' : null,
                         prefixIcon: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           child: Icon(FontAwesomeIcons.envelope,
                               size: 30, color: Colors.black),
                         ),
-                        hintText: 'Email',
+                        hintText: 'Username',
                         hintStyle: kBodyText.apply(color: Colors.black45),
                       ),
 
@@ -101,7 +122,7 @@ class LoginScreen extends StatelessWidget {
               ),
               //),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 100),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
                 child: Container(
                   height: 50,
                   width: 300,
@@ -119,6 +140,8 @@ class LoginScreen extends StatelessWidget {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20.0)),
                             borderSide: const BorderSide(color: Colors.grey)),
+                        errorText:
+                            userNameValidate ? 'Please enter a Password' : null,
 
                         // border: InputBorder.none,
                         prefixIcon: Padding(
@@ -132,7 +155,9 @@ class LoginScreen extends StatelessWidget {
 
                         suffixIcon: IconButton(
                           onPressed: () {
-                            hidepassword = !hidepassword;
+                            setState(() {
+                              hidepassword = !hidepassword;
+                            });
                           },
                           icon: Icon(hidepassword
                               ? Icons.visibility_off
@@ -159,68 +184,141 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
+
               //),
+              // Padding(
+              //   padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
+              //child: Form(
+              //key: _formKey,
+              Container(
+                height: MediaQuery.of(context).size.height * 0.08,
+                width: MediaQuery.of(context).size.width * 0.4,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: kBlue,
+                ),
+                child: FlatButton(
+                    child: Text(
+                      'Login',
+                      style: kBodyText.copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    //color: Colors.black,
+                    // buttonName: 'Login',
+                    // buttonColor: kBlue,
+                    onPressed: () {
+                      bool usernamevalid =
+                          validateTextField(usernamecontroller.text);
+                      bool passwordvalid =
+                          validateTextField(passwordcontroller.text);
+                      if (usernamevalid && passwordvalid) {
+                        loginRequestModel.email =
+                            usernamecontroller.text.trim();
+                        loginRequestModel.password =
+                            passwordcontroller.text.trim();
+                        print(loginRequestModel.toJson());
+                        APIService apiService = new APIService();
+                        apiService.login(loginRequestModel).then((value) {
+                          if (value.validate) {
+                            _scaffoldKey.currentState.showSnackBar(
+                              SnackBar(
+                                content: Text("Login Succesful"),
+                              ),
+                            );
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Mainpage()));
+                            // final snackBar = SnackBar(
+                            //   content: Text("Login Succesful"),
+                            // );
+                            // Scaffold.of(context).showSnackBar(snackBar);
+                          } else if (!value.validate) {
+                            // final snackBar = SnackBar(
+                            //   content: Text("User not found"),
+                            // );
+                            _scaffoldKey.currentState.showSnackBar(
+                              SnackBar(
+                                content: Text("User not Found!"),
+                              ),
+                            );
+                          } else {
+                            _scaffoldKey.currentState.showSnackBar(
+                              SnackBar(
+                                content: Text("Login Error"),
+                              ),
+                            );
+                          }
+                        });
+                      }
+                    }),
+              ),
+              SizedBox(
+                height: 20,
+              ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 110),
-                child: Form(
-                  //key: _formKey,
-                  child: Container(
-                    child: FlatButton(
-                        child: Text(
-                          'Login',
-                          style:
-                              kBodyText.copyWith(fontWeight: FontWeight.bold),
-                        ),
-                        color: Colors.black,
-                        // buttonName: 'Login',
-                        // buttonColor: kBlue,
-                        onPressed: () {
-                          loginRequestModel.email = emailcontroller.text.trim();
-                          loginRequestModel.password =
-                              passwordcontroller.text.trim();
-                          print(loginRequestModel.toJson());
-                          APIService apiService = new APIService();
-                          apiService.login(loginRequestModel).then((value) {
-                            if (value.validate) {
-                              _scaffoldKey.currentState.showSnackBar(
-                                SnackBar(
-                                  content: Text("Login Succesful"),
-                                ),
-                              );
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Mainpage()));
-                              // final snackBar = SnackBar(
-                              //   content: Text("Login Succesful"),
-                              // );
-                              // Scaffold.of(context).showSnackBar(snackBar);
-                            } else {
-                              // final snackBar = SnackBar(
-                              //   content: Text("User not found"),
-                              // );
-                              _scaffoldKey.currentState.showSnackBar(
-                                SnackBar(
-                                  content: Text("User not Found!"),
-                                ),
-                              );
-                            }
-                          });
-                        }),
+                padding: const EdgeInsets.fromLTRB(5, 0, 0, 80),
+                child: Container(
+                  child: Text(
+                    'Forgot Password?',
+                    style: TextStyle(
+                        color: kBlue,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
+
+              //),
               // SizedBox(
-              //   height: 100,
+              //   height: 20,
               // ),
+              Container(
+                child: Text(
+                  'Dont have an account?',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+
+              new GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SignupScreen()));
+                },
+                child: new Text(
+                  'Signup',
+                  style: TextStyle(
+                      color: kBlue, fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
+
+              SizedBox(
+                height: 20,
+              ),
               //),
               // ),
             ],
           ),
+
           //
         ),
       ],
     );
+  }
+
+  bool validateTextField(String userInput) {
+    if (userInput.isEmpty) {
+      setState(() {
+        userNameValidate = true;
+      });
+      return false;
+    }
+    setState(() {
+      userNameValidate = false;
+    });
+    return true;
   }
 }
 

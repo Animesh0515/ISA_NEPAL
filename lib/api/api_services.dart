@@ -5,7 +5,7 @@ import 'package:http/http.dart' as https;
 
 class APIService {
   Future<LogingResponseModel> login(LoginRequestModel loginRequestModel) async {
-    String url = "https://192.168.0.104:44387/api/Account/login";
+    String url = "https://192.168.0.100:44387/api/Account/login";
     // Location currentLocation = window.location;
     // print(currentLocation.href);
     // var url = window.location.href;

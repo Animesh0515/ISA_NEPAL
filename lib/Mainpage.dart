@@ -59,6 +59,8 @@ class Mainpage extends StatelessWidget {
               // buttonName: 'Login',
               // buttonColor: kBlue,
               onPressed: () {
+                Navigator.pushNamed(context, 'LoginScreen');
+
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => LoginScreen()));
               }
@@ -93,6 +95,7 @@ class Mainpage extends StatelessWidget {
           child: RoundedButton(
             buttonName: 'Signup',
             buttonColor: Colors.green,
+            Pagename: 'SignupScreen()',
           ),
         ),
         FlatButton(
