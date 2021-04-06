@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:isa_nepal/BookingsScrren.dart';
+
+import 'package:isa_nepal/GalleryScreen.dart';
 import 'screens.dart';
 import 'dart:io';
 
@@ -14,6 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'ISA NEPAL',
       theme: ThemeData(
         textTheme:
@@ -21,7 +25,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SignupScreen(),
+      home: BookingsScreen(),
     );
   }
 }

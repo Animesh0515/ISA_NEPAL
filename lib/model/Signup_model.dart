@@ -1,0 +1,47 @@
+class SignupResponseModel {
+  final int status;
+  SignupResponseModel({this.status});
+  factory SignupResponseModel.fromJson(Map<String, dynamic> json) {
+    return SignupResponseModel(status: json['status']);
+  }
+}
+
+class SignupRequestModel {
+  String firstName;
+  String lastName;
+  String address;
+  String email;
+  String dateofBirth;
+  int age;
+  String gender;
+  int phoneNo;
+  String username;
+  String password;
+
+  SignupRequestModel(
+      {this.firstName,
+      this.lastName,
+      this.address,
+      this.email,
+      this.dateofBirth,
+      this.age,
+      this.gender,
+      this.phoneNo,
+      this.username,
+      this.password});
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {
+      'First_Name': firstName.trim(),
+      'Last_Name': lastName.trim(),
+      'Email': email.trim(),
+      'DateOfBirth': dateofBirth.trim(),
+      'Age': age,
+      'Phone_Number': phoneNo,
+      'Gender': gender.trim(),
+      'Address': address.trim(),
+      'Username': username.trim(),
+      'Password': password.trim()
+    };
+    return map;
+  }
+}

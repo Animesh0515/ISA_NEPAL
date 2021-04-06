@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  bool userNameValidate = false;
+  bool ValidateTextField = false;
 
   @override
   Widget build(BuildContext context) {
@@ -92,8 +92,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20.0)),
                             borderSide: const BorderSide(color: Colors.grey)),
-                        errorText:
-                            userNameValidate ? 'Please enter a Username' : null,
+                        errorText: ValidateTextField
+                            ? 'Please enter a Username'
+                            : null,
                         prefixIcon: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           child: Icon(FontAwesomeIcons.envelope,
@@ -140,8 +141,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20.0)),
                             borderSide: const BorderSide(color: Colors.grey)),
-                        errorText:
-                            userNameValidate ? 'Please enter a Password' : null,
+                        errorText: ValidateTextField
+                            ? 'Please enter a Password'
+                            : null,
 
                         // border: InputBorder.none,
                         prefixIcon: Padding(
@@ -311,12 +313,12 @@ class _LoginScreenState extends State<LoginScreen> {
   bool validateTextField(String userInput) {
     if (userInput.isEmpty) {
       setState(() {
-        userNameValidate = true;
+        ValidateTextField = true;
       });
       return false;
     }
     setState(() {
-      userNameValidate = false;
+      ValidateTextField = false;
     });
     return true;
   }
