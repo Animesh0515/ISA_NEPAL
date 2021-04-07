@@ -296,12 +296,13 @@ class _SignupScreenState extends State<SignupScreen> {
                         signupRequestModel.gender = gendertext.trim();
                         signupRequestModel.phoneNo =
                             int.parse(phonenocontroller.text.trim());
+                        signupRequestModel.email = gendertext.trim();
                         signupRequestModel.username =
                             usernamecontroller.text.trim();
                         signupRequestModel.password =
                             passwordcontroller.text.trim();
                         APIService apiService = new APIService();
-                        apiService.Signup(signupRequestModel).then(
+                        apiService.signup(signupRequestModel).then(
                           (value) {
                             if (value.status == 0) {
                               _scaffoldKey.currentState.showSnackBar(

@@ -1,5 +1,5 @@
 class SignupResponseModel {
-  final int status;
+  final String status;
   SignupResponseModel({this.status});
   factory SignupResponseModel.fromJson(Map<String, dynamic> json) {
     return SignupResponseModel(status: json['status']);
@@ -18,19 +18,21 @@ class SignupRequestModel {
   String username;
   String password;
 
-  SignupRequestModel(
-      {this.firstName,
-      this.lastName,
-      this.address,
-      this.email,
-      this.dateofBirth,
-      this.age,
-      this.gender,
-      this.phoneNo,
-      this.username,
-      this.password});
+  SignupRequestModel({
+    this.firstName,
+    this.lastName,
+    this.address,
+    this.email,
+    this.dateofBirth,
+    this.age,
+    this.gender,
+    this.phoneNo,
+    this.username,
+    this.password,
+  });
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
+      'Role': "User",
       'First_Name': firstName.trim(),
       'Last_Name': lastName.trim(),
       'Email': email.trim(),

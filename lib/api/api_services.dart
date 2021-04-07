@@ -43,13 +43,14 @@ class APIService {
     return null;
   }
 
-  Future<SignupResponseModel> Signup(
+  Future<SignupResponseModel> signup(
       SignupRequestModel signupRequestModel) async {
-    String url = "https://3a582ff1a805.ngrok.io/api/Account/Signup";
+    String url = "https://192.168.0.103:44387/api/Account/Signup";
     try {
       final response = await https.post(url, body: signupRequestModel.toJson());
       if (response.statusCode == 200 || response.statusCode == 400) {
         var jsonres = jsonDecode(response.body);
+        print(jsonres);
         return SignupResponseModel.fromJson(jsonDecode(jsonres));
       } else {
         throw Exception("Failed to store data");

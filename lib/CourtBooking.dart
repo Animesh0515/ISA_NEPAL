@@ -65,8 +65,6 @@ class _CourtBookingState extends State<CourtBooking> {
     if (active) {
       setState(() {
         apiService.getTime(bookingTimeRequestModel).then((value) {
-          print(value.time.length);
-
           if (value.time.length == 0 || value.time.length == null) {
             time = [];
 
