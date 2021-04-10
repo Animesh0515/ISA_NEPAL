@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:isa_nepal/CourtBooking.dart';
 import 'package:isa_nepal/model/BookingTimeModel.dart';
+import 'package:isa_nepal/model/CalendarModel.dart';
 import 'package:isa_nepal/model/CourtBookingModel.dart';
 import 'package:isa_nepal/model/Signup_model.dart';
 import 'package:isa_nepal/model/login_model.dart';
@@ -92,6 +93,42 @@ class APIService {
       } else {
         throw Exception("Failed to save data");
       }
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+  Future<List> getCalendarData(int weekend) async {
+    List<CalendarResponseModel> lst = [];
+    String url = "https://192.168.1.111:44387/api/Calendar/GetData";
+    try {
+      final response = await https.post(url,
+          headers: {'Content-type': 'application/json'},
+          body: jsonEncode(weekend));
+      if (response.statusCode == 200) {
+        List<dynamic> list = jsonDecode(response.body);
+
+        return list;
+      } else {
+        throw Exception("Failed to load data");
+      }
+    } catch (e) {
+      print(e);
+    }
+    return lst;
+  }
+
+  Future<List<dynamic>> getPhotos() async {
+    // ignore: deprecated_member_use
+
+    String url = "https://192.168.1.111:44387/api/Gallery/GetPhotos";
+    try {
+      var response = await https.get(url);
+      print(jsonDecode(response.body));
+      final List<dynamic> photos = jsonDecode(response.body);
+      print(photos);
+      return photos;
     } catch (e) {
       print(e);
     }

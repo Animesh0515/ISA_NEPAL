@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         ),
         Scaffold(
-          resizeToAvoidBottomPadding: false,
+          resizeToAvoidBottomInset: false,
           key: _scaffoldKey,
           backgroundColor: Colors.transparent,
 
@@ -199,6 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   borderRadius: BorderRadius.circular(5),
                   color: kBlue,
                 ),
+                // ignore: deprecated_member_use
                 child: FlatButton(
                     child: Text(
                       'Login',
@@ -238,12 +239,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             // final snackBar = SnackBar(
                             //   content: Text("User not found"),
                             // );
+                            // ignore: deprecated_member_use
                             _scaffoldKey.currentState.showSnackBar(
                               SnackBar(
                                 content: Text("User not Found!"),
                               ),
                             );
                           } else {
+                            // ignore: deprecated_member_use
                             _scaffoldKey.currentState.showSnackBar(
                               SnackBar(
                                 content: Text("Login Error"),

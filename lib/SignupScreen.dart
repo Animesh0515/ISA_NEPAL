@@ -44,7 +44,7 @@ class _SignupScreenState extends State<SignupScreen> {
               // width: MediaQuery.of(context).size.width,
               child: Scaffold(
                 key: _scaffoldKey,
-                resizeToAvoidBottomPadding: false,
+                resizeToAvoidBottomInset: false,
                 backgroundColor: Colors.white,
                 body: Column(children: [
                   Image(
@@ -304,19 +304,24 @@ class _SignupScreenState extends State<SignupScreen> {
                         APIService apiService = new APIService();
                         apiService.signup(signupRequestModel).then(
                           (value) {
+                            // ignore: unrelated_type_equality_checks
                             if (value.status == 0) {
+                              // ignore: deprecated_member_use
                               _scaffoldKey.currentState.showSnackBar(
                                 SnackBar(
                                   content: Text("User Registered Successfully"),
                                 ),
                               );
+                              // ignore: unrelated_type_equality_checks
                             } else if (value.status == 1) {
+                              // ignore: deprecated_member_use
                               _scaffoldKey.currentState.showSnackBar(
                                 SnackBar(
                                   content: Text("Username already exists!"),
                                 ),
                               );
                             } else {
+                              // ignore: deprecated_member_use
                               _scaffoldKey.currentState.showSnackBar(
                                 SnackBar(
                                   content: Text("Some error occured!"),

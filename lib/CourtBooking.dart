@@ -20,15 +20,9 @@ class _CourtBookingState extends State<CourtBooking> {
   bool validateDropDown = false;
   static bool active = false;
   TextEditingController datecontroller = new TextEditingController();
-  String timetext = "Text";
+  String timetext = "Time";
   List<dynamic> time = [];
   DateTime _date = DateTime.now();
-  List<String> timePeriod = [
-    '11:00A.M-12:00P.M',
-    '12:00P.M-1:00P.M',
-    '2:00P.M-3:00P.M',
-    '3:00P.M-4:00P.M'
-  ];
   APIService apiService = new APIService();
   BookingTimeRequestModel bookingTimeRequestModel =
       new BookingTimeRequestModel();
@@ -39,7 +33,7 @@ class _CourtBookingState extends State<CourtBooking> {
     DateTime _datePicker = await showDatePicker(
       context: context,
       initialDate: _date,
-      firstDate: DateTime(2000),
+      firstDate: _date,
       lastDate: DateTime(3000),
     );
 
@@ -54,13 +48,6 @@ class _CourtBookingState extends State<CourtBooking> {
   }
 
   @override
-  void initState() {
-    //Future<List<BookingTimeModel>> lst = apiService.getTime();
-
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     if (active) {
       setState(() {
@@ -71,6 +58,7 @@ class _CourtBookingState extends State<CourtBooking> {
             buttonenable = false;
             final snackBar =
                 SnackBar(content: Text("Booking is full for current date"));
+            // ignore: deprecated_member_use
             Scaffold.of(context).showSnackBar(snackBar);
           } else {
             for (int i = 0; i < value.time.length; i++) {
@@ -265,7 +253,7 @@ class _CourtBookingState extends State<CourtBooking> {
                                             "Court has been booked succesfully"));
                                     Scaffold.of(context).showSnackBar(snackBar);
                                     datecontroller.text = "";
-                                    timetext = "Text";
+                                    timetext = "Time";
                                   } else {
                                     final snackBar = SnackBar(
                                         content: Text(

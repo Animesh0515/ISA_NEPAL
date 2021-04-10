@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:isa_nepal/Calendar.dart';
-import 'package:isa_nepal/Gallery.dart';
-
-import 'package:isa_nepal/LoginScreen.dart';
-import 'package:isa_nepal/Profile.dart';
 import 'package:isa_nepal/pallete.dart';
-import 'CourtBooking.dart' as cb;
-import 'TrainingBooking.dart' as tb;
 import 'screens.dart';
+import 'Maindrawer.dart';
+import 'Photos.dart' as ph;
+import 'Videos.dart' as vd;
 
-class BookingsScreen extends StatefulWidget {
+class Gallery extends StatefulWidget {
   @override
-  _BookingsScreenState createState() => _BookingsScreenState();
+  _GalleryState createState() => _GalleryState();
 }
 
-class _BookingsScreenState extends State<BookingsScreen>
-    with SingleTickerProviderStateMixin {
-  get iconTheme => null;
-  int selectedIndex = 1;
+class _GalleryState extends State<Gallery> with SingleTickerProviderStateMixin {
+  int selectedIndex = 0;
   TabController tabcontroller;
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
     tabcontroller = new TabController(vsync: this, length: 2);
   }
@@ -29,6 +25,8 @@ class _BookingsScreenState extends State<BookingsScreen>
   @override
   void dispose() {
     tabcontroller.dispose();
+
+    // TODO: implement dispose
     super.dispose();
   }
 
@@ -37,10 +35,10 @@ class _BookingsScreenState extends State<BookingsScreen>
     return Scaffold(
       bottomNavigationBar: Row(
         children: <Widget>[
-          NavbarItems(Icons.photo_album, 0),
-          NavbarItems(Icons.sports_basketball, 1),
-          NavbarItems(Icons.calendar_today, 2),
-          NavbarItems(Icons.person, 3),
+          navbarItems(Icons.photo_album, 0),
+          navbarItems(Icons.sports_basketball, 1),
+          navbarItems(Icons.calendar_today, 2),
+          navbarItems(Icons.person, 3),
         ],
       ),
       appBar: AppBar(
@@ -50,37 +48,34 @@ class _BookingsScreenState extends State<BookingsScreen>
             ),
         iconTheme: IconThemeData(color: Colors.black),
         title: Padding(
-            padding: const EdgeInsets.fromLTRB(140, 0, 0, 0),
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          padding: const EdgeInsets.fromLTRB(140, 0, 0, 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
               Container(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('ISA NEPAL',
-                    style:
-                        TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold)),
-              ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('ISA NEPAL',
+                      style: TextStyle(
+                          fontSize: 25.0, fontWeight: FontWeight.bold))),
               CircleAvatar(
                 radius: 20,
                 backgroundImage: AssetImage('assets/isa.png'),
               ),
-
-              // Image.asset(
-              //   'assets/isa.png',
-              //   fit: BoxFit.contain,
-              //    height: 32,
-              // ),
-            ])),
+            ],
+          ),
+        ),
         bottom: new TabBar(
           controller: tabcontroller,
           tabs: <Tab>[
             new Tab(
               icon: new Icon(
-                Icons.sports_basketball,
+                Icons.photo,
                 color: Colors.grey,
               ),
             ),
             new Tab(
               icon: new Icon(
-                Icons.sports_rounded,
+                Icons.video_collection,
                 color: Colors.grey,
               ),
             )
@@ -89,26 +84,15 @@ class _BookingsScreenState extends State<BookingsScreen>
       ),
       body: new TabBarView(
         controller: tabcontroller,
-        children: <Widget>[new cb.CourtBooking(), new tb.TrainingBooking()],
+        children: <Widget>[new ph.Photos(), new vd.Videos()],
       ),
-      // title: Text(
-      //   "ISA NEPAL",
-      //   style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
-      // ),
-      // backgroundColor: kWhite,
-      // textTheme: Theme.of(context).textTheme.apply(
-      //       bodyColor: Colors.black,
-      //     ),
-      // ),
-
       drawer: Drawer(
         child: Maindrawer(),
       ),
     );
   }
 
-  // ignore: non_constant_identifier_names
-  Widget NavbarItems(IconData icon, int index) {
+  Widget navbarItems(IconData icon, int index) {
     return GestureDetector(
       onTap: () {
         setState(() {

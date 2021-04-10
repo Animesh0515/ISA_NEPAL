@@ -2,3 +2,8 @@ export 'Mainpage.dart';
 export 'LoginScreen.dart';
 export 'SignupScreen.dart';
 export 'BookingsScreen.dart';
+export 'Gallery.dart';
+export 'Profile.dart';
+export 'Calendar.dart';
+export 'DynamicEvent.dart';
+export 'Maindrawer.dart';

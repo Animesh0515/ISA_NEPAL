@@ -41,7 +41,6 @@ class _TrainingBookingState extends State<TrainingBooking> {
     if (response.statusCode == 200) {
       setState(() {
         timelst = json.decode(response.body.toString());
-        print(venuelst);
       });
     }
   }
@@ -70,11 +69,11 @@ class _TrainingBookingState extends State<TrainingBooking> {
               ),
               SizedBox(height: 20),
               Container(
-                height: 100,
+                height: 250,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(
-                      'assets/court.png',
+                      'assets/Training.jpg',
                     ),
                     fit: BoxFit.fill,
                   ),
@@ -227,6 +226,7 @@ class _TrainingBookingState extends State<TrainingBooking> {
                     borderRadius: BorderRadius.circular(5),
                     color: kBlue,
                   ),
+                  // ignore: deprecated_member_use
                   child: FlatButton(
                     onPressed: buttonenable
                         ? () {
@@ -235,10 +235,12 @@ class _TrainingBookingState extends State<TrainingBooking> {
                             if (venue == "Choose Venue") {
                               final snackBar = SnackBar(
                                   content: Text("Please select the Venue!"));
+                              // ignore: deprecated_member_use
                               Scaffold.of(context).showSnackBar(snackBar);
                             } else if (time == "Choose Time") {
                               final snackBar = SnackBar(
                                   content: Text("Please select the Venue!"));
+                              // ignore: deprecated_member_use
                               Scaffold.of(context).showSnackBar(snackBar);
                             } else {
                               if (validjoindate) {}
