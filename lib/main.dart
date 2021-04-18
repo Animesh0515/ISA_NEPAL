@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:isa_nepal/Videos.dart';
+import 'package:video_player/video_player.dart';
+import 'Chewie.dart';
+import 'Videos1.dart';
 import 'screens.dart';
 import 'dart:io';
 
@@ -23,7 +26,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Gallery(),
+      home: MyBookingScreen(),
     );
   }
 }

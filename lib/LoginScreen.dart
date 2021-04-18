@@ -27,6 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool ValidateTextField = false;
 
+  bool loading = false;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -56,256 +58,274 @@ class _LoginScreenState extends State<LoginScreen> {
           key: _scaffoldKey,
           backgroundColor: Colors.transparent,
 
-          body: Column(
-            children: [
-              SizedBox(
-                height: 30,
-              ),
-              Flexible(
-                child: Center(
-                  key: _formKey,
-                  child: Text(
-                    'Login',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 60,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                child: Container(
-                  height: 50,
-                  width: 300,
-
-                  // decoration: BoxDecoration(
-                  //   color: Colors.grey[500].withOpacity(0.5),
-                  //   borderRadius: BorderRadius.circular(16),
-                  // ),
-                  child: Center(
-                    child: TextField(
-                      controller: usernamecontroller,
-
-                      decoration: InputDecoration(
-                        enabledBorder: const OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20.0)),
-                            borderSide: const BorderSide(color: Colors.grey)),
-                        errorText: ValidateTextField
-                            ? 'Please enter a Username'
-                            : null,
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Icon(FontAwesomeIcons.envelope,
-                              size: 30, color: Colors.black),
-                        ),
-                        hintText: 'Username',
-                        hintStyle: kBodyText.apply(color: Colors.black45),
-                      ),
-
-                      style: TextStyle(
-                        fontSize: 19,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      //style: kBodyText,
-
-                      keyboardType: TextInputType.emailAddress,
-                      //validator: (input)=> !input.contains("@")?"Email Id should be valid" : null,
-                      textInputAction: TextInputAction.next,
+          body: loading
+              ? Center(child: CircularProgressIndicator())
+              : Column(
+                  children: [
+                    SizedBox(
+                      height: 30,
                     ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              //),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
-                child: Container(
-                  height: 50,
-                  width: 300,
-                  //decoration: BoxDecoration(
-                  //color: Colors.grey[100].withOpacity(0.5),
-                  //borderRadius: BorderRadius.circular(16),
-                  // ),
-                  child: Center(
-                    child: TextField(
-                      controller: passwordcontroller,
-                      obscureText: hidepassword,
+                    Flexible(
+                      child: Center(
+                        key: _formKey,
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 60,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                      child: Container(
+                        height: 50,
+                        width: 300,
 
-                      decoration: InputDecoration(
-                        enabledBorder: const OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20.0)),
-                            borderSide: const BorderSide(color: Colors.grey)),
-                        errorText: ValidateTextField
-                            ? 'Please enter a Password'
-                            : null,
+                        // decoration: BoxDecoration(
+                        //   color: Colors.grey[500].withOpacity(0.5),
+                        //   borderRadius: BorderRadius.circular(16),
+                        // ),
+                        child: Center(
+                          child: TextField(
+                            controller: usernamecontroller,
 
-                        // border: InputBorder.none,
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Icon(
-                            FontAwesomeIcons.lock,
-                            size: 30,
-                            color: Colors.black,
+                            decoration: InputDecoration(
+                              enabledBorder: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20.0)),
+                                  borderSide:
+                                      const BorderSide(color: Colors.grey)),
+                              errorText: ValidateTextField
+                                  ? 'Please enter a Username'
+                                  : null,
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0),
+                                child: Icon(FontAwesomeIcons.envelope,
+                                    size: 30, color: Colors.black),
+                              ),
+                              hintText: 'Username',
+                              hintStyle: kBodyText.apply(color: Colors.black45),
+                            ),
+
+                            style: TextStyle(
+                              fontSize: 19,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            //style: kBodyText,
+
+                            keyboardType: TextInputType.emailAddress,
+                            //validator: (input)=> !input.contains("@")?"Email Id should be valid" : null,
+                            textInputAction: TextInputAction.next,
                           ),
                         ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    //),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+                      child: Container(
+                        height: 50,
+                        width: 300,
+                        //decoration: BoxDecoration(
+                        //color: Colors.grey[100].withOpacity(0.5),
+                        //borderRadius: BorderRadius.circular(16),
+                        // ),
+                        child: Center(
+                          child: TextField(
+                            controller: passwordcontroller,
+                            obscureText: hidepassword,
 
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              hidepassword = !hidepassword;
-                            });
-                          },
-                          icon: Icon(hidepassword
-                              ? Icons.visibility_off
-                              : Icons.visibility),
-                          color: Colors.black,
+                            decoration: InputDecoration(
+                              enabledBorder: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20.0)),
+                                  borderSide:
+                                      const BorderSide(color: Colors.grey)),
+                              errorText: ValidateTextField
+                                  ? 'Please enter a Password'
+                                  : null,
+
+                              // border: InputBorder.none,
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0),
+                                child: Icon(
+                                  FontAwesomeIcons.lock,
+                                  size: 30,
+                                  color: Colors.black,
+                                ),
+                              ),
+
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    hidepassword = !hidepassword;
+                                  });
+                                },
+                                icon: Icon(hidepassword
+                                    ? Icons.visibility_off
+                                    : Icons.visibility),
+                                color: Colors.black,
+                              ),
+
+                              hintText: 'Password',
+                              hintStyle: kBodyText.apply(color: Colors.black45),
+                              // color: Colors.grey[400].withOpacity(0.5),
+                            ),
+                            style: TextStyle(
+                              fontSize: 19,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            //style: kBodyText,
+                            keyboardType: TextInputType.name,
+                            textInputAction: TextInputAction.done,
+                          ),
                         ),
-
-                        hintText: 'Password',
-                        hintStyle: kBodyText.apply(color: Colors.black45),
-                        // color: Colors.grey[400].withOpacity(0.5),
                       ),
-                      style: TextStyle(
-                        fontSize: 19,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      //style: kBodyText,
-                      keyboardType: TextInputType.name,
-                      textInputAction: TextInputAction.done,
                     ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
+                    SizedBox(
+                      height: 20,
+                    ),
 
-              //),
-              // Padding(
-              //   padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
-              //child: Form(
-              //key: _formKey,
-              Container(
-                height: MediaQuery.of(context).size.height * 0.08,
-                width: MediaQuery.of(context).size.width * 0.4,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: kBlue,
-                ),
-                // ignore: deprecated_member_use
-                child: FlatButton(
-                    child: Text(
-                      'Login',
-                      style: kBodyText.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    //color: Colors.black,
-                    // buttonName: 'Login',
-                    // buttonColor: kBlue,
-                    onPressed: () {
-                      bool usernamevalid =
-                          validateTextField(usernamecontroller.text);
-                      bool passwordvalid =
-                          validateTextField(passwordcontroller.text);
-                      if (usernamevalid && passwordvalid) {
-                        loginRequestModel.email =
-                            usernamecontroller.text.trim();
-                        loginRequestModel.password =
-                            passwordcontroller.text.trim();
-                        print(loginRequestModel.toJson());
-                        APIService apiService = new APIService();
-                        apiService.login(loginRequestModel).then((value) {
-                          if (value.validate) {
-                            _scaffoldKey.currentState.showSnackBar(
-                              SnackBar(
-                                content: Text("Login Succesful"),
-                              ),
-                            );
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Mainpage()));
-                            // final snackBar = SnackBar(
-                            //   content: Text("Login Succesful"),
-                            // );
-                            // Scaffold.of(context).showSnackBar(snackBar);
-                          } else if (!value.validate) {
-                            // final snackBar = SnackBar(
-                            //   content: Text("User not found"),
-                            // );
-                            // ignore: deprecated_member_use
-                            _scaffoldKey.currentState.showSnackBar(
-                              SnackBar(
-                                content: Text("User not Found!"),
-                              ),
-                            );
-                          } else {
-                            // ignore: deprecated_member_use
-                            _scaffoldKey.currentState.showSnackBar(
-                              SnackBar(
-                                content: Text("Login Error"),
-                              ),
-                            );
-                          }
-                        });
-                      }
-                    }),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(5, 0, 0, 80),
-                child: Container(
-                  child: Text(
-                    'Forgot Password?',
-                    style: TextStyle(
+                    //),
+                    // Padding(
+                    //   padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
+                    //child: Form(
+                    //key: _formKey,
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.08,
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
                         color: kBlue,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
+                      ),
+                      // ignore: deprecated_member_use
+                      child: FlatButton(
+                          child: Text(
+                            'Login',
+                            style:
+                                kBodyText.copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          //color: Colors.black,
+                          // buttonName: 'Login',
+                          // buttonColor: kBlue,
+                          onPressed: () {
+                            bool usernamevalid =
+                                validateTextField(usernamecontroller.text);
+                            bool passwordvalid =
+                                validateTextField(passwordcontroller.text);
+                            if (usernamevalid && passwordvalid) {
+                              loginRequestModel.email =
+                                  usernamecontroller.text.trim();
+                              loginRequestModel.password =
+                                  passwordcontroller.text.trim();
 
-              //),
-              // SizedBox(
-              //   height: 20,
-              // ),
-              Container(
-                child: Text(
-                  'Dont have an account?',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
+                              setState(() {
+                                loading = true;
+                              });
+                              APIService apiService = new APIService();
+                              apiService.login(loginRequestModel).then((value) {
+                                setState(() {
+                                  loading = false;
+                                });
+                                if (value.validate) {
+                                  // ignore: deprecated_member_use
+                                  _scaffoldKey.currentState.showSnackBar(
+                                    SnackBar(
+                                      content: Text("Login Succesful"),
+                                    ),
+                                  );
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Gallery()));
+                                  // final snackBar = SnackBar(
+                                  //   content: Text("Login Succesful"),
+                                  // );
+                                  // Scaffold.of(context).showSnackBar(snackBar);
+                                } else if (!value.validate) {
+                                  // final snackBar = SnackBar(
+                                  //   content: Text("User not found"),
+                                  // );
+                                  // ignore: deprecated_member_use
+                                  _scaffoldKey.currentState.showSnackBar(
+                                    SnackBar(
+                                      content: Text("Wrong Email or Password!"),
+                                    ),
+                                  );
+                                } else {
+                                  // ignore: deprecated_member_use
+                                  _scaffoldKey.currentState.showSnackBar(
+                                    SnackBar(
+                                      content: Text("Login Error"),
+                                    ),
+                                  );
+                                }
+                              });
+                            }
+                          }),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(5, 0, 0, 80),
+                      child: Container(
+                        child: Text(
+                          'Forgot Password?',
+                          style: TextStyle(
+                              color: kBlue,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
 
-              new GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SignupScreen()));
-                },
-                child: new Text(
-                  'Signup',
-                  style: TextStyle(
-                      color: kBlue, fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ),
+                    //),
+                    // SizedBox(
+                    //   height: 20,
+                    // ),
+                    Container(
+                      child: Text(
+                        'Dont have an account?',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
 
-              SizedBox(
-                height: 20,
-              ),
-              //),
-              // ),
-            ],
-          ),
+                    new GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignupScreen()));
+                      },
+                      child: new Text(
+                        'Signup',
+                        style: TextStyle(
+                            color: kBlue,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: 20,
+                    ),
+                    //),
+                    // ),
+                  ],
+                ),
 
           //
         ),

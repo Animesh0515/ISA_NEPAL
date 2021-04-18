@@ -6,12 +6,13 @@ import 'package:isa_nepal/model/BookingTimeModel.dart';
 import 'package:isa_nepal/model/CalendarModel.dart';
 import 'package:isa_nepal/model/CourtBookingModel.dart';
 import 'package:isa_nepal/model/Signup_model.dart';
+import 'package:isa_nepal/model/UserModel.dart';
 import 'package:isa_nepal/model/login_model.dart';
 import 'package:http/http.dart' as https;
 
 class APIService {
   Future<LogingResponseModel> login(LoginRequestModel loginRequestModel) async {
-    String url = "https://3a582ff1a805.ngrok.io/api/Account/login";
+    String url = "https://192.168.0.104:44387/api/Account/login";
     // Location currentLocation = window.location;
     // print(currentLocation.href);
     // var url = window.location.href;
@@ -46,7 +47,7 @@ class APIService {
 
   Future<SignupResponseModel> signup(
       SignupRequestModel signupRequestModel) async {
-    String url = "https://192.168.0.103:44387/api/Account/Signup";
+    String url = "https://192.168.0.104:44387/api/Account/Signup";
     try {
       final response = await https.post(url, body: signupRequestModel.toJson());
       if (response.statusCode == 200 || response.statusCode == 400) {
@@ -64,7 +65,7 @@ class APIService {
 
   Future<BookingTimeResponseModel> getTime(
       BookingTimeRequestModel bookingTimeRequestModel) async {
-    String url = "https://192.168.0.103:44387/api/CourtBooking/GetTimeList";
+    String url = "https://192.168.0.104:44387/api/CourtBooking/GetTimeList";
     try {
       final response =
           await https.post(url, body: bookingTimeRequestModel.toJson());
@@ -84,7 +85,7 @@ class APIService {
 
   Future<CourtBookingResponseModel> booking(
       CourtBookingRequestModel requestModel) async {
-    String url = "https://192.168.0.103:44387/api/CourtBooking/BookCourt";
+    String url = "https://192.168.0.104:44387/api/CourtBooking/BookCourt";
     try {
       final response = await https.post(url, body: requestModel.toJson());
       if (response.statusCode == 200) {
@@ -101,7 +102,7 @@ class APIService {
 
   Future<List> getCalendarData(int weekend) async {
     List<CalendarResponseModel> lst = [];
-    String url = "https://192.168.1.111:44387/api/Calendar/GetData";
+    String url = "https://192.168.0.104:44387/api/Calendar/GetData";
     try {
       final response = await https.post(url,
           headers: {'Content-type': 'application/json'},
@@ -122,13 +123,77 @@ class APIService {
   Future<List<dynamic>> getPhotos() async {
     // ignore: deprecated_member_use
 
-    String url = "https://192.168.1.111:44387/api/Gallery/GetPhotos";
+    String url = "https://192.168.0.104:44387/api/Gallery/GetPhotos";
     try {
       var response = await https.get(url);
-      print(jsonDecode(response.body));
-      final List<dynamic> photos = jsonDecode(response.body);
-      print(photos);
-      return photos;
+      if (response.statusCode == 200) {
+        final List<dynamic> photos = jsonDecode(response.body);
+        return photos;
+      } else {
+        throw Exception("Failed to load data");
+      }
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+  Future<bool> updatedProfileImage(String imageurl) async {
+    String url = "https://192.168.0.104:44387/api/Profile/UpdateImage";
+    try {
+      print(jsonEncode(imageurl));
+      var response = await https.post(url,
+          headers: {'Content-type': 'application/json'},
+          body: jsonEncode(imageurl));
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        throw Exception("Failed to load data");
+      }
+    } catch (e) {
+      print(e);
+    }
+    return false;
+  }
+
+  Future<UserDetailModel> getUserDetails() async {
+    String url = "https://192.168.0.104:44387/api/Profile/GetUserDetails";
+
+    try {
+      var response = await https.get(url);
+      if (response.statusCode == 200) {
+        var data = json.decode(json.decode(response.body));
+
+        return UserDetailModel(
+            firstName: data["First_Name"],
+            lastName: data["Last_Name"],
+            email: data["Email"],
+            address: data["Address"],
+            phoneNo: data["Phone_Number"],
+            dateofBirth: data["DateOfBirth"],
+            gender: data["Gender"],
+            age: data["Age"],
+            imageUrl: data["ImageUrl"]);
+      } else {
+        throw Exception("Failed to load data");
+      }
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+  Future<UserUpdateResponseModel> updateUser(UserDetailModel userDetail) async {
+    String url = "https://192.168.0.104:44387/api/Profile/UpdateUserDetails";
+    try {
+      var response = await https.post(url, body: userDetail.toJson());
+      if (response.statusCode == 200) {
+        print(json.decode(response.body));
+        return UserUpdateResponseModel.fromJson(
+            json.decode(json.decode(response.body)));
+      } else {
+        throw Exception("Failed to update data");
+      }
     } catch (e) {
       print(e);
     }

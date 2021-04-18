@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens.dart';
 
 class Maindrawer extends StatelessWidget {
   const Maindrawer({Key key}) : super(key: key);
@@ -30,7 +31,10 @@ class Maindrawer extends StatelessWidget {
                   height: 20,
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Profile()));
+                  },
                   leading: Icon(
                     Icons.person,
                     color: Colors.blue,
@@ -43,7 +47,12 @@ class Maindrawer extends StatelessWidget {
                           color: Colors.blue)),
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyBookingScreen()));
+                  },
                   leading: Icon(
                     Icons.book,
                     color: Colors.blue,
@@ -69,7 +78,12 @@ class Maindrawer extends StatelessWidget {
                           color: Colors.blue)),
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SettingsScreen()));
+                  },
                   leading: Icon(
                     Icons.settings,
                     color: Colors.blue,

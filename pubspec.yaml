@@ -27,7 +27,14 @@ dependencies:
   shared_preferences: ^0.5.4+5
   flutter:
     sdk: flutter
-  chewie: ^0.9.7
+  # chewie: ^0.9.7
+  # video_player: ">=0.7.0 <0.11.0"
+  video_player: ^1.0.0
+  # chewie: ^0.9.7
+  chewie:
+    git:
+      url: https://github.com/masewo/chewie.git
+  
   
 
   # The following adds the Cupertino Icons font to your application.
@@ -36,10 +43,14 @@ dependencies:
   font_awesome_flutter: ^8.10.0
   google_fonts: ^1.1.1
   url_launcher: ^5.7.10
+  image_picker: ^0.6.7+4
+  path_provider: ^1.6.24
+  flutter_image_utilities: ^2.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  # better_player: ^0.0.64
     
 
 # For information on the generic Dart part of this file, see the

@@ -4,7 +4,6 @@ import 'package:isa_nepal/pallete.dart';
 import 'screens.dart';
 import 'Maindrawer.dart';
 import 'Photos.dart' as ph;
-import 'Videos.dart' as vd;
 
 class Gallery extends StatefulWidget {
   @override
@@ -84,7 +83,7 @@ class _GalleryState extends State<Gallery> with SingleTickerProviderStateMixin {
       ),
       body: new TabBarView(
         controller: tabcontroller,
-        children: <Widget>[new ph.Photos(), new vd.Videos()],
+        children: <Widget>[new ph.Photos(), new ph.Photos()],
       ),
       drawer: Drawer(
         child: Maindrawer(),

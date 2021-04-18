@@ -7,3 +7,5 @@ export 'Profile.dart';
 export 'Calendar.dart';
 export 'DynamicEvent.dart';
 export 'Maindrawer.dart';
+export 'SettingsScreen.dart';
+export 'MyBookingScreen.dart';
