@@ -23,7 +23,7 @@ class _TrainingBookingState extends State<TrainingBooking> {
 
   void getVenue() async {
     var response = await https
-        .get("https://100.64.255.157:44387/api/TrainingBooking/ShowVenue");
+        .get("https://d25687fe502b.ngrok.io  /api/TrainingBooking/ShowVenue");
     if (response.statusCode == 200) {
       setState(() {
         venuelst = json.decode(response.body.toString());
@@ -33,7 +33,7 @@ class _TrainingBookingState extends State<TrainingBooking> {
 
   void getTime(String venue) async {
     var response = await https.post(
-        "https://100.64.255.157:44387/api/TrainingBooking/ShowTime",
+        "https://d25687fe502b.ngrok.io /api/TrainingBooking/ShowTime",
         headers: {
           'Content-type': 'application/json',
         },

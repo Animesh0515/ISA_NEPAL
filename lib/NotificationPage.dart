@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:isa_nepal/api/api_services.dart';
-import 'package:isa_nepal/model/MyBookingsModel.dart';
-import 'package:isa_nepal/pallete.dart';
-import 'screens.dart';
 
-class MyBookingScreen extends StatefulWidget {
+import 'Maindrawer.dart';
+import 'pallete.dart';
+
+class NotificationPage extends StatefulWidget {
   @override
-  _MyBookingScreenState createState() => _MyBookingScreenState();
+  _NotificationPageState createState() => _NotificationPageState();
 }
 
-class _MyBookingScreenState extends State<MyBookingScreen> {
-  List<String> data = ["abc", "cde"];
+class _NotificationPageState extends State<NotificationPage> {
   APIService apiService = new APIService();
   // ignore: deprecated_member_use
-  List<dynamic> bookingslst = new List<dynamic>();
-  String venue;
+  List<dynamic> notificationlst = new List<dynamic>();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    apiService.getBookings().then((result) {
+    apiService.getNotifications().then((result) {
       setState(() {
-        bookingslst = result;
+        notificationlst = result;
       });
     });
   }
@@ -56,7 +54,7 @@ class _MyBookingScreenState extends State<MyBookingScreen> {
       drawer: Drawer(
         child: Maindrawer(),
       ),
-      body: bookingslst == null
+      body: notificationlst == null
           ? Container(child: Text("No Bookings"))
           : Container(
               padding: EdgeInsets.only(left: 16, top: 25, right: 16),
@@ -64,7 +62,7 @@ class _MyBookingScreenState extends State<MyBookingScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "My Bookings",
+                    "Notifications",
                     style: TextStyle(
                         fontFamily: 'Calibar',
                         fontWeight: FontWeight.bold,
@@ -75,7 +73,7 @@ class _MyBookingScreenState extends State<MyBookingScreen> {
                   ),
                   Expanded(
                       child: ListView(
-                    children: bookingslst.map((bookingslst) {
+                    children: notificationlst.map((notificationlst) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
@@ -96,16 +94,7 @@ class _MyBookingScreenState extends State<MyBookingScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(bookingslst["BookingType"],
-                                  style: TextStyle(
-                                      fontFamily: 'Arial', fontSize: 20)),
-                              Text("Booked Date:" + bookingslst["BookedDate"]),
-                              Text("Booked For:" + bookingslst["BookedFor"]),
-                              Text("Time:" + bookingslst["BookedFor"]),
-                              //venue = bookingslst["BookedFor"],
-                              // venue == null
-                              //     ? Text("")
-                              //     : Text("Venue:" + bookingslst["Venue"]),
+                              Text(notificationlst["Notification"]),
                             ],
                           ),
                         ),

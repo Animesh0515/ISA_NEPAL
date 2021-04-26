@@ -5,6 +5,7 @@ import 'package:isa_nepal/CourtBooking.dart';
 import 'package:isa_nepal/model/BookingTimeModel.dart';
 import 'package:isa_nepal/model/CalendarModel.dart';
 import 'package:isa_nepal/model/CourtBookingModel.dart';
+import 'package:isa_nepal/model/MyBookingsModel.dart';
 import 'package:isa_nepal/model/Signup_model.dart';
 import 'package:isa_nepal/model/UserModel.dart';
 import 'package:isa_nepal/model/login_model.dart';
@@ -12,13 +13,14 @@ import 'package:http/http.dart' as https;
 
 class APIService {
   Future<LogingResponseModel> login(LoginRequestModel loginRequestModel) async {
-    String url = "https://192.168.0.104:44387/api/Account/login";
+    String url = "https://d25687fe502b.ngrok.io/api/Account/login";
     // Location currentLocation = window.location;
     // print(currentLocation.href);
     // var url = window.location.href;
     // print(url);
     //print(Uri.base);
     try {
+      print(loginRequestModel.toJson());
       final response = await https.post(url, body: loginRequestModel.toJson());
       if (response.statusCode == 200 || response.statusCode == 400) {
         //List<dynamic> pdfText = new List<dynamic>();
@@ -47,7 +49,7 @@ class APIService {
 
   Future<SignupResponseModel> signup(
       SignupRequestModel signupRequestModel) async {
-    String url = "https://192.168.0.104:44387/api/Account/Signup";
+    String url = "https://d25687fe502b.ngrok.io/api/Account/Signup";
     try {
       final response = await https.post(url, body: signupRequestModel.toJson());
       if (response.statusCode == 200 || response.statusCode == 400) {
@@ -65,7 +67,7 @@ class APIService {
 
   Future<BookingTimeResponseModel> getTime(
       BookingTimeRequestModel bookingTimeRequestModel) async {
-    String url = "https://192.168.0.104:44387/api/CourtBooking/GetTimeList";
+    String url = "https://d25687fe502b.ngrok.io/api/CourtBooking/GetTimeList";
     try {
       final response =
           await https.post(url, body: bookingTimeRequestModel.toJson());
@@ -85,7 +87,7 @@ class APIService {
 
   Future<CourtBookingResponseModel> booking(
       CourtBookingRequestModel requestModel) async {
-    String url = "https://192.168.0.104:44387/api/CourtBooking/BookCourt";
+    String url = "https://d25687fe502b.ngrok.io/api/CourtBooking/BookCourt";
     try {
       final response = await https.post(url, body: requestModel.toJson());
       if (response.statusCode == 200) {
@@ -102,7 +104,7 @@ class APIService {
 
   Future<List> getCalendarData(int weekend) async {
     List<CalendarResponseModel> lst = [];
-    String url = "https://192.168.0.104:44387/api/Calendar/GetData";
+    String url = "https://d25687fe502b.ngrok.io/api/Calendar/GetData";
     try {
       final response = await https.post(url,
           headers: {'Content-type': 'application/json'},
@@ -123,7 +125,7 @@ class APIService {
   Future<List<dynamic>> getPhotos() async {
     // ignore: deprecated_member_use
 
-    String url = "https://192.168.0.104:44387/api/Gallery/GetPhotos";
+    String url = "https://d25687fe502b.ngrok.io/api/Gallery/GetPhotos";
     try {
       var response = await https.get(url);
       if (response.statusCode == 200) {
@@ -139,7 +141,7 @@ class APIService {
   }
 
   Future<bool> updatedProfileImage(String imageurl) async {
-    String url = "https://192.168.0.104:44387/api/Profile/UpdateImage";
+    String url = "https://d25687fe502b.ngrok.io/api/Profile/UpdateImage";
     try {
       print(jsonEncode(imageurl));
       var response = await https.post(url,
@@ -157,7 +159,7 @@ class APIService {
   }
 
   Future<UserDetailModel> getUserDetails() async {
-    String url = "https://192.168.0.104:44387/api/Profile/GetUserDetails";
+    String url = "https://d25687fe502b.ngrok.io/api/Profile/GetUserDetails";
 
     try {
       var response = await https.get(url);
@@ -184,15 +186,49 @@ class APIService {
   }
 
   Future<UserUpdateResponseModel> updateUser(UserDetailModel userDetail) async {
-    String url = "https://192.168.0.104:44387/api/Profile/UpdateUserDetails";
+    String url = "https://d25687fe502b.ngrok.io/api/Profile/UpdateUserDetails";
     try {
-      var response = await https.post(url, body: userDetail.toJson());
+      print(json.encode(userDetail.toJson()));
+      var response =
+          await https.post(url, body: json.encode(userDetail.toJson()));
       if (response.statusCode == 200) {
         print(json.decode(response.body));
         return UserUpdateResponseModel.fromJson(
             json.decode(json.decode(response.body)));
       } else {
         throw Exception("Failed to update data");
+      }
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+  Future<List> getBookings() async {
+    String url = "https://d25687fe502b.ngrok.io/api/CourtBooking/GetBookings";
+    try {
+      var response = await https.get(url);
+      if (response.statusCode == 200) {
+        //print(json.decode(json.decode(response.body)));
+        List<dynamic> bookingslst = json.decode(json.decode(response.body));
+        return bookingslst;
+      }
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+  Future<List> getNotifications() async {
+    String url =
+        "https://d25687fe502b.ngrok.io/api/Notification/GetNotification";
+    try {
+      var response = await https.get(url);
+      if (response.statusCode == 200) {
+        //print(json.decode(json.decode(response.body)));
+        List<dynamic> notificationslst =
+            json.decode(json.decode(response.body));
+        return notificationslst;
       }
     } catch (e) {
       print(e);

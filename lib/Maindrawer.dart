@@ -65,7 +65,12 @@ class Maindrawer extends StatelessWidget {
                           color: Colors.blue)),
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NotificationPage()));
+                  },
                   leading: Icon(
                     Icons.notifications,
                     color: Colors.blue,

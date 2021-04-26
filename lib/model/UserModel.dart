@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class UserDetailModel {
   String firstName;
   String lastName;

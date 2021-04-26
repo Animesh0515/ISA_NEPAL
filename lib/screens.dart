@@ -9,3 +9,4 @@ export 'DynamicEvent.dart';
 export 'Maindrawer.dart';
 export 'SettingsScreen.dart';
 export 'MyBookingScreen.dart';
+export 'NotificationPage.dart';
