@@ -14,3 +14,13 @@ class TrainingBookingRequestModel {
     return map;
   }
 }
+
+class TrainingBookingResponseModel {
+  final bool booked;
+
+  TrainingBookingResponseModel({this.booked});
+
+  factory TrainingBookingResponseModel.fromJson(Map<String, dynamic> json) {
+    return TrainingBookingResponseModel(booked: json['booked']);
+  }
+}

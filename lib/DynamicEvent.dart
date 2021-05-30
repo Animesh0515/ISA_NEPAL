@@ -165,7 +165,6 @@ class _DynamicEventState extends State<DynamicEvent> {
   Widget navbarItems() {
     return Column(children: <Widget>[
       for (var event in _selectedEvents)
-        // "//CREATE N YOUR WIDGETS//",
         ..._selectedEvents.map((event) => Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(

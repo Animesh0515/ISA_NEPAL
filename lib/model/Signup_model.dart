@@ -1,8 +1,8 @@
 class SignupResponseModel {
-  final String status;
+  final int status;
   SignupResponseModel({this.status});
   factory SignupResponseModel.fromJson(Map<String, dynamic> json) {
-    return SignupResponseModel(status: json['status']);
+    return SignupResponseModel(status: json['Status']);
   }
 }
 
@@ -32,7 +32,6 @@ class SignupRequestModel {
   });
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
-      'Role': "User",
       'First_Name': firstName.trim(),
       'Last_Name': lastName.trim(),
       'Email': email.trim(),

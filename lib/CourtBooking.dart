@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -29,6 +30,7 @@ class _CourtBookingState extends State<CourtBooking> {
   CourtBookingRequestModel bookingRequestModel = new CourtBookingRequestModel();
   bool buttonenable = true;
   String status;
+  bool startup = true;
 
   Future<Null> _selectDate(BuildContext context) async {
     DateTime _datePicker = await showDatePicker(
@@ -49,12 +51,18 @@ class _CourtBookingState extends State<CourtBooking> {
   }
 
   void getStatus() async {
-    var response = await https
-        .get("https://9ff0882628ab.ngrok.io/api/CourtBooking/GetStatus");
+    String auth = APIService.token + ":" + APIService.username;
+    var response = await https.get(
+        "https://76a52a7707e7.ngrok.io/api/CourtBooking/GetStatus",
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer " + auth,
+          HttpHeaders.contentTypeHeader: "application/json"
+        });
     if (response.statusCode == 200) {
       setState(() {
         var result = json.decode(json.decode(response.body.toString()));
         status = result["Status"];
+        startup = false;
       });
     }
   }
@@ -89,242 +97,257 @@ class _CourtBookingState extends State<CourtBooking> {
       active = false;
     }
     // time.clear();
-    return Stack(key: _formKey, children: <Widget>[
-      Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: SingleChildScrollView(
-            child: Column(children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 250),
-                child: Text("Book Court",
-                    style: TextStyle(
-                        fontFamily: 'Arial',
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold)),
-              ),
-              SizedBox(height: 20),
-              Container(
-                height: 100,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                      'assets/court.png',
+    return startup == true
+        ? Center(child: CircularProgressIndicator())
+        : Stack(key: _formKey, children: <Widget>[
+            Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: SingleChildScrollView(
+                  child: Column(children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(right: 250),
+                      child: Text("Book Court",
+                          style: TextStyle(
+                              fontFamily: 'Arial',
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold)),
                     ),
-                    fit: BoxFit.fill,
-                  ),
-                  color: Colors.white,
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              SizedBox(height: 60),
-              status == "E"
-                  ? Column(children: [
-                      new Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            SizedBox(
-                              width: 70,
-                            ),
-                            new Text(
-                              "Date:",
-                              style:
-                                  TextStyle(fontFamily: 'Arial', fontSize: 20),
-                            ),
-                            SizedBox(width: 15),
-                            new Flexible(
-                              child: Container(
-                                height: 40,
-                                width: 200,
-                                child: new TextFormField(
-                                    onTap: () {
-                                      setState(() {
-                                        _selectDate(context);
-                                        buttonenable = true;
-                                        time.clear();
-                                      });
-                                    },
-                                    controller: datecontroller,
-                                    decoration: InputDecoration(
-
-                                        // labelText: new DateFormat("yyyy-MM-dd")
-                                        //     .format(_date),
-                                        hintText: "Date",
-                                        enabledBorder: const OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(5.0)),
-                                            borderSide: const BorderSide(
-                                                color: Colors.grey)),
-                                        errorText: validateTextField
-                                            ? 'Please enter ' + "Date"
-                                            : null)),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 80.0,
-                            ),
-                          ]),
-
-                      SizedBox(
-                        height: 20,
+                    SizedBox(height: 20),
+                    Container(
+                      height: 100,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            'assets/court.png',
+                          ),
+                          fit: BoxFit.fill,
+                        ),
+                        color: Colors.white,
                       ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    SizedBox(height: 60),
+                    status == "E"
+                        ? Column(children: [
+                            new Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  SizedBox(
+                                    width: 70,
+                                  ),
+                                  new Text(
+                                    "Date:",
+                                    style: TextStyle(
+                                        fontFamily: 'Arial', fontSize: 20),
+                                  ),
+                                  SizedBox(width: 15),
+                                  new Flexible(
+                                    child: Container(
+                                      height: 40,
+                                      width: 200,
+                                      child: new TextFormField(
+                                          onTap: () {
+                                            setState(() {
+                                              _selectDate(context);
+                                              buttonenable = true;
+                                              time.clear();
+                                            });
+                                          },
+                                          controller: datecontroller,
+                                          decoration: InputDecoration(
 
-                      new Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
+                                              // labelText: new DateFormat("yyyy-MM-dd")
+                                              //     .format(_date),
+                                              hintText: "Date",
+                                              enabledBorder:
+                                                  const OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  5.0)),
+                                                      borderSide:
+                                                          const BorderSide(
+                                                              color:
+                                                                  Colors.grey)),
+                                              errorText: validateTextField
+                                                  ? 'Please enter ' + "Date"
+                                                  : null)),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 80.0,
+                                  ),
+                                ]),
+
                             SizedBox(
-                              width: 70,
+                              height: 20,
                             ),
-                            new Text(
-                              "Time:",
-                              style:
-                                  TextStyle(fontFamily: 'Arial', fontSize: 20),
+
+                            new Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  SizedBox(
+                                    width: 70,
+                                  ),
+                                  new Text(
+                                    "Time:",
+                                    style: TextStyle(
+                                        fontFamily: 'Arial', fontSize: 20),
+                                  ),
+                                  SizedBox(width: 10),
+                                  new Flexible(
+                                    child: Container(
+                                      height: 40,
+                                      width: 200,
+                                      decoration: ShapeDecoration(
+                                        shape: RoundedRectangleBorder(
+                                          side: BorderSide(color: Colors.grey),
+
+                                          // const BorderSide(color: Colors.grey),
+
+                                          // width: 1.0,
+                                          //               borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                          // borderSide: const BorderSide(color: Colors.grey)))),
+                                          // style: BorderStyle.solid),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5.0)),
+                                        ),
+                                      ),
+                                      child: Container(
+                                        child: DropdownButton(
+                                            focusColor: Colors.grey,
+                                            hint: Text(timetext),
+                                            // validator: (value) =>
+                                            //     value == null ? 'field required' : null,
+                                            //                             validator: (value) {
+                                            //   if (value == null || value.isEmpty) {
+                                            //     return 'Please enter some text';
+                                            //   }
+                                            //   return null;
+                                            // },
+                                            items: time
+                                                .map((dynamic val) =>
+                                                    DropdownMenuItem<String>(
+                                                      value: val,
+                                                      child: Text(val),
+                                                    ))
+                                                .toList(),
+                                            onChanged: (value) {
+                                              setState(
+                                                () {
+                                                  timetext = value;
+                                                },
+                                              );
+                                            }),
+                                      ),
+                                    ),
+                                  ),
+                                  // Text((() {
+                                  //   if (timetext == "Time") {
+                                  //     Text("Please select the time");
+                                  //   }
+                                  // })()),
+                                  SizedBox(
+                                    width: 80.0,
+                                  ),
+                                ]),
+                            SizedBox(
+                              height: 50,
                             ),
-                            SizedBox(width: 10),
-                            new Flexible(
-                              child: Container(
-                                height: 40,
-                                width: 200,
-                                decoration: ShapeDecoration(
-                                  shape: RoundedRectangleBorder(
-                                    side: BorderSide(color: Colors.grey),
 
-                                    // const BorderSide(color: Colors.grey),
+                            IgnorePointer(
+                              ignoring: false,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 20),
+                                child: Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.07,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.3,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: kBlue,
+                                  ),
+                                  child: FlatButton(
+                                    onPressed: buttonenable
+                                        ? () {
+                                            bool datevalidate = validateText(
+                                                datecontroller.text);
 
-                                    // width: 1.0,
-                                    //               borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                    // borderSide: const BorderSide(color: Colors.grey)))),
-                                    // style: BorderStyle.solid),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5.0)),
+                                            if (timetext == "Text" ||
+                                                timetext == "") {
+                                              final snackBar = SnackBar(
+                                                  content: Text(
+                                                      "Please Select the Time"));
+                                              Scaffold.of(context)
+                                                  .showSnackBar(snackBar);
+                                            } else {
+                                              if (datevalidate) {
+                                                bookingRequestModel.date =
+                                                    datecontroller.text.trim();
+                                                bookingRequestModel.time =
+                                                    timetext.trim();
+                                                apiService
+                                                    .booking(
+                                                        bookingRequestModel)
+                                                    .then((value) {
+                                                  if (value.booked) {
+                                                    final snackBar = SnackBar(
+                                                        content: Text(
+                                                            "Court has been booked succesfully"));
+                                                    Scaffold.of(context)
+                                                        .showSnackBar(snackBar);
+                                                    datecontroller.text = "";
+                                                    setState(() {
+                                                      timetext = "Time";
+                                                      time.clear();
+                                                    });
+                                                  } else {
+                                                    final snackBar = SnackBar(
+                                                        content: Text(
+                                                            "Booking Unsuccesfull. Something went wrong!"));
+                                                    Scaffold.of(context)
+                                                        .showSnackBar(snackBar);
+                                                  }
+                                                });
+                                              }
+                                            }
+                                          }
+                                        : null,
+                                    disabledTextColor: kWhite,
+                                    disabledColor: Colors.grey,
+                                    child: Text(
+                                      'Book',
+                                      style: kBodyText.copyWith(
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                 ),
-                                child: Container(
-                                  child: DropdownButton(
-                                      focusColor: Colors.grey,
-                                      hint: Text(timetext),
-                                      // validator: (value) =>
-                                      //     value == null ? 'field required' : null,
-                                      //                             validator: (value) {
-                                      //   if (value == null || value.isEmpty) {
-                                      //     return 'Please enter some text';
-                                      //   }
-                                      //   return null;
-                                      // },
-                                      items: time
-                                          .map((dynamic val) =>
-                                              DropdownMenuItem<String>(
-                                                value: val,
-                                                child: Text(val),
-                                              ))
-                                          .toList(),
-                                      onChanged: (value) {
-                                        setState(
-                                          () {
-                                            timetext = value;
-                                          },
-                                        );
-                                      }),
-                                ),
                               ),
                             ),
-                            // Text((() {
-                            //   if (timetext == "Time") {
-                            //     Text("Please select the time");
-                            //   }
-                            // })()),
-                            SizedBox(
-                              width: 80.0,
-                            ),
-                          ]),
-                      SizedBox(
-                        height: 50,
-                      ),
 
-                      IgnorePointer(
-                        ignoring: false,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * 0.07,
-                            width: MediaQuery.of(context).size.width * 0.3,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: kBlue,
-                            ),
-                            child: FlatButton(
-                              onPressed: buttonenable
-                                  ? () {
-                                      bool datevalidate =
-                                          validateText(datecontroller.text);
-
-                                      if (timetext == "Text" ||
-                                          timetext == "") {
-                                        final snackBar = SnackBar(
-                                            content:
-                                                Text("Please Select the Time"));
-                                        Scaffold.of(context)
-                                            .showSnackBar(snackBar);
-                                      } else {
-                                        if (datevalidate) {
-                                          bookingRequestModel.date =
-                                              datecontroller.text.trim();
-                                          bookingRequestModel.time =
-                                              timetext.trim();
-                                          apiService
-                                              .booking(bookingRequestModel)
-                                              .then((value) {
-                                            if (value.booked) {
-                                              final snackBar = SnackBar(
-                                                  content: Text(
-                                                      "Court has been booked succesfully"));
-                                              Scaffold.of(context)
-                                                  .showSnackBar(snackBar);
-                                              datecontroller.text = "";
-                                              timetext = "Time";
-                                            } else {
-                                              final snackBar = SnackBar(
-                                                  content: Text(
-                                                      "Booking Unsuccesfull. Something went wrong!"));
-                                              Scaffold.of(context)
-                                                  .showSnackBar(snackBar);
-                                            }
-                                          });
-                                        }
-                                      }
-                                    }
-                                  : null,
-                              disabledTextColor: kWhite,
-                              disabledColor: Colors.grey,
-                              child: Text(
-                                'Book',
-                                style: kBodyText.copyWith(
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      // new Row(
-                      //   child: Text(
-                      //     "Hello",
-                      //     style: TextStyle(fontFamily: 'Arial', fontSize: 20),
-                      //   ),
-                      // ),
-                    ])
-                  : Container(
-                      child: Center(
-                          child: Text("Court Booking has been Disable!",
-                              style: TextStyle(
-                                  fontFamily: 'Arial',
-                                  fontSize: 25,
-                                  color: Colors.black12,
-                                  fontWeight: FontWeight.bold))))
-            ]),
-          ))
-    ]);
+                            // new Row(
+                            //   child: Text(
+                            //     "Hello",
+                            //     style: TextStyle(fontFamily: 'Arial', fontSize: 20),
+                            //   ),
+                            // ),
+                          ])
+                        : Container(
+                            child: Center(
+                                child: Text("Court Booking has been Disable!",
+                                    style: TextStyle(
+                                        fontFamily: 'Arial',
+                                        fontSize: 25,
+                                        color: Colors.black12,
+                                        fontWeight: FontWeight.bold))))
+                  ]),
+                ))
+          ]);
   }
 
   bool validateText(String userinput) {

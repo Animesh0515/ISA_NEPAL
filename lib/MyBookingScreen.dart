@@ -15,6 +15,7 @@ class _MyBookingScreenState extends State<MyBookingScreen> {
   // ignore: deprecated_member_use
   List<dynamic> bookingslst = new List<dynamic>();
   String venue;
+  bool startup = true;
   @override
   void initState() {
     // TODO: implement initState
@@ -22,6 +23,7 @@ class _MyBookingScreenState extends State<MyBookingScreen> {
     apiService.getBookings().then((result) {
       setState(() {
         bookingslst = result;
+        startup = false;
       });
     });
   }
@@ -56,65 +58,69 @@ class _MyBookingScreenState extends State<MyBookingScreen> {
       drawer: Drawer(
         child: Maindrawer(),
       ),
-      body: bookingslst == null
-          ? Container(child: Text("No Bookings"))
-          : Container(
-              padding: EdgeInsets.only(left: 16, top: 25, right: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "My Bookings",
-                    style: TextStyle(
-                        fontFamily: 'Calibar',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30),
+      body: startup == true
+          ? Center(child: CircularProgressIndicator())
+          : bookingslst == null
+              ? Container(child: Text("No Bookings"))
+              : Container(
+                  padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "My Bookings",
+                        style: TextStyle(
+                            fontFamily: 'Calibar',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Expanded(
+                          child: ListView(
+                        children: bookingslst.map((bookingslst) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(24)),
+                                  border: Border.all(color: Colors.grey),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.blue.withOpacity(0.4),
+                                      blurRadius: 8,
+                                      spreadRadius: 2,
+                                      offset: Offset(4, 4),
+                                    )
+                                  ]),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(bookingslst["BookingType"],
+                                      style: TextStyle(
+                                          fontFamily: 'Arial', fontSize: 20)),
+                                  Text("Booked Date:" +
+                                      bookingslst["BookedDate"]),
+                                  Text(
+                                      "Booked For:" + bookingslst["BookedFor"]),
+                                  Text("Time:" + bookingslst["Time"]),
+                                  //venue = bookingslst["BookedFor"],
+                                  // venue == null
+                                  //     ? Text("")
+                                  //     : Text("Venue:" + bookingslst["Venue"]),
+                                ],
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ))
+                    ],
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Expanded(
-                      child: ListView(
-                    children: bookingslst.map((bookingslst) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(24)),
-                              border: Border.all(color: Colors.grey),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.blue.withOpacity(0.4),
-                                  blurRadius: 8,
-                                  spreadRadius: 2,
-                                  offset: Offset(4, 4),
-                                )
-                              ]),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(bookingslst["BookingType"],
-                                  style: TextStyle(
-                                      fontFamily: 'Arial', fontSize: 20)),
-                              Text("Booked Date:" + bookingslst["BookedDate"]),
-                              Text("Booked For:" + bookingslst["BookedFor"]),
-                              Text("Time:" + bookingslst["BookedFor"]),
-                              //venue = bookingslst["BookedFor"],
-                              // venue == null
-                              //     ? Text("")
-                              //     : Text("Venue:" + bookingslst["Venue"]),
-                            ],
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  ))
-                ],
-              ),
-            ),
+                ),
     );
   }
 }

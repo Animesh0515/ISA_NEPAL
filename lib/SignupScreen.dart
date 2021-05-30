@@ -309,7 +309,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               // ignore: deprecated_member_use
                               _scaffoldKey.currentState.showSnackBar(
                                 SnackBar(
-                                  content: Text("User Registered Successfully"),
+                                  content: Text("Username already exists!"),
                                 ),
                               );
                               // ignore: unrelated_type_equality_checks
@@ -317,9 +317,21 @@ class _SignupScreenState extends State<SignupScreen> {
                               // ignore: deprecated_member_use
                               _scaffoldKey.currentState.showSnackBar(
                                 SnackBar(
-                                  content: Text("Username already exists!"),
+                                  content: Text("User Registered Successfully"),
                                 ),
                               );
+                              setState(() {
+                                firstnamecontroller.text = "";
+                                lastnamecontroller.text = "";
+                                addresscontroller.text = "";
+                                emailaddresscontroller.text = "";
+                                dobcontroller.text = "";
+                                agecontroller.text = "";
+                                phonenocontroller.text = "";
+                                gendertext = 'Gender';
+                                usernamecontroller.text = "";
+                                passwordcontroller.text = "";
+                              });
                             } else {
                               // ignore: deprecated_member_use
                               _scaffoldKey.currentState.showSnackBar(

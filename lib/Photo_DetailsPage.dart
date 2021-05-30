@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 class Photo_DetailsPage extends StatelessWidget {
@@ -18,7 +20,7 @@ class Photo_DetailsPage extends StatelessWidget {
                       bottomLeft: Radius.circular(30),
                       bottomRight: Radius.circular(30)),
                   image: DecorationImage(
-                    image: AssetImage(imagepath),
+                    image: MemoryImage(base64Decode(imagepath)),
                     fit: BoxFit.fill,
                   )),
             ))

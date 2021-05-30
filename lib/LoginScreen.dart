@@ -1,6 +1,9 @@
+// import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:isa_nepal/Mainpage.dart';
+// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:isa_nepal/pallete.dart';
 import 'package:isa_nepal/screens.dart';
 
@@ -28,6 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
   bool ValidateTextField = false;
 
   bool loading = false;
+
+  // final storage = new FlutterSecureStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               prefixIcon: Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20.0),
-                                child: Icon(FontAwesomeIcons.envelope,
+                                child: Icon(FontAwesomeIcons.user,
                                     size: 30, color: Colors.black),
                               ),
                               hintText: 'Username',
@@ -232,40 +237,51 @@ class _LoginScreenState extends State<LoginScreen> {
                                 loading = true;
                               });
                               APIService apiService = new APIService();
-                              apiService.login(loginRequestModel).then((value) {
+                              apiService
+                                  .login(loginRequestModel)
+                                  .then((value) async {
                                 setState(() {
                                   loading = false;
                                 });
-                                if (value.validate) {
-                                  // ignore: deprecated_member_use
-                                  _scaffoldKey.currentState.showSnackBar(
-                                    SnackBar(
-                                      content: Text("Login Succesful"),
-                                    ),
-                                  );
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Gallery()));
-                                  // final snackBar = SnackBar(
-                                  //   content: Text("Login Succesful"),
-                                  // );
-                                  // Scaffold.of(context).showSnackBar(snackBar);
-                                } else if (!value.validate) {
-                                  // final snackBar = SnackBar(
-                                  //   content: Text("User not found"),
-                                  // );
-                                  // ignore: deprecated_member_use
-                                  _scaffoldKey.currentState.showSnackBar(
-                                    SnackBar(
-                                      content: Text("Wrong Email or Password!"),
-                                    ),
-                                  );
+                                if (value != null) {
+                                  if (value.validate) {
+                                    APIService.token = value.token;
+                                    // await storage.write(
+                                    //     key: 'token', value: value.token);
+                                    // print(await storage.read(key: 'token'));
+                                    // FlutterSession().set("token", value.token);
+                                    // print(FlutterSession().get("token"));
+                                    // ignore: deprecated_member_use
+                                    _scaffoldKey.currentState.showSnackBar(
+                                      SnackBar(
+                                        content: Text("Login Succesful"),
+                                      ),
+                                    );
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Gallery()));
+                                    // final snackBar = SnackBar(
+                                    //   content: Text("Login Succesful"),
+                                    // );
+                                    // Scaffold.of(context).showSnackBar(snackBar);
+                                  } else if (!value.validate) {
+                                    // final snackBar = SnackBar(
+                                    //   content: Text("User not found"),
+                                    // );
+                                    // ignore: deprecated_member_use
+                                    _scaffoldKey.currentState.showSnackBar(
+                                      SnackBar(
+                                        content:
+                                            Text("Wrong Email or Password!"),
+                                      ),
+                                    );
+                                  }
                                 } else {
                                   // ignore: deprecated_member_use
                                   _scaffoldKey.currentState.showSnackBar(
                                     SnackBar(
-                                      content: Text("Login Error"),
+                                      content: Text("Something Went Wrong!"),
                                     ),
                                   );
                                 }

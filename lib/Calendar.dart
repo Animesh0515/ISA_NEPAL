@@ -24,6 +24,7 @@ class _CalendarState extends State<Calendar> {
   APIService apiService = new APIService();
   bool status;
   String month;
+  bool startup = true;
 
   // set datalst(Future<List<dynamic>> outputlst) {
   //   datalst = outputlst;
@@ -41,6 +42,7 @@ class _CalendarState extends State<Calendar> {
 
         if (datalst.length > 0) {
           status = true;
+          startup = false;
         }
       });
     });
@@ -114,6 +116,7 @@ class _CalendarState extends State<Calendar> {
             // events: _markedDatyeMap,,
             onDaySelected: (date, events, holidays) {
               setState(() {
+                startup = true;
                 apiService.getCalendarData(date.weekday).then((result) {
                   setState(() {
                     datalst = [];
@@ -126,21 +129,33 @@ class _CalendarState extends State<Calendar> {
                     } else {
                       status = false;
                     }
+                    startup = false;
                   });
                 });
               });
             },
             calendarController: _controller,
           ),
-
-          if (status)
-            for (int i = 0; i < datalst.length; i++) dataDisplay(i, dt, month),
-          if (!status) emptyData(),
+          startup == true ? Center(child: CircularProgressIndicator()) : data()
 
           // ..._selectedEvents.map((event) => Padding()),
         ],
       )),
     );
+  }
+
+  // ignore: missing_return
+  Widget data() {
+    if (status)
+      return Column(
+        children: [
+          for (int i = 0; i < datalst.length; i++) dataDisplay(i, dt, month)
+        ],
+      );
+    if (!status)
+      return Column(
+        children: [emptyData()],
+      );
   }
 
   Widget navbarItems(IconData icon, int index) {

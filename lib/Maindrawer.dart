@@ -1,9 +1,26 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:isa_nepal/api/api_services.dart';
 import 'screens.dart';
 
-class Maindrawer extends StatelessWidget {
+class Maindrawer extends StatefulWidget {
   const Maindrawer({Key key}) : super(key: key);
-  final String name = "Animesh Rai";
+
+  @override
+  _MaindrawerState createState() => _MaindrawerState();
+}
+
+class _MaindrawerState extends State<Maindrawer> {
+  APIService apiService = new APIService();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -16,12 +33,15 @@ class Maindrawer extends StatelessWidget {
               children: [
                 CircleAvatar(
                     radius: 50,
-                    backgroundImage: AssetImage('assets/nikesh.jpg')),
+                    backgroundImage:
+                        Gallery.image == null || Gallery.image == ""
+                            ? AssetImage("assets/profile.png")
+                            : MemoryImage(base64Decode(Gallery.image))),
                 SizedBox(
                   height: 10.0,
                 ),
                 Text(
-                  name,
+                  Gallery.firstName + Gallery.lastName,
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.w800,
@@ -101,13 +121,17 @@ class Maindrawer extends StatelessWidget {
                           color: Colors.blue)),
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    Gallery.startup = true;
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()));
+                  },
                   leading: Icon(
-                    Icons.receipt,
+                    Icons.logout,
                     color: Colors.blue,
                     size: 30,
                   ),
-                  title: Text("About US",
+                  title: Text("Log Out",
                       style: TextStyle(
                           fontSize: 18.0,
                           fontWeight: FontWeight.bold,

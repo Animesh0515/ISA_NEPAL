@@ -1,9 +1,11 @@
 class LogingResponseModel {
   final bool validate;
-  LogingResponseModel({this.validate});
+  final String token;
+  LogingResponseModel({this.validate, this.token});
 
   factory LogingResponseModel.fromJson(Map<String, dynamic> json) {
-    return LogingResponseModel(validate: json['validate']);
+    return LogingResponseModel(
+        validate: json['validate'], token: json['token']);
   }
 }
 

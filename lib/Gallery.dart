@@ -1,11 +1,22 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:isa_nepal/Calendar.dart';
 import 'package:isa_nepal/pallete.dart';
+import 'api/api_services.dart';
 import 'screens.dart';
 import 'Maindrawer.dart';
 import 'Photos.dart' as ph;
+import 'Videos1.dart' as vd;
+import 'package:http/http.dart' as https;
 
 class Gallery extends StatefulWidget {
+  static String firstName;
+  static String lastName;
+  static String image;
+  static bool startup = true;
+
   @override
   _GalleryState createState() => _GalleryState();
 }
@@ -14,11 +25,38 @@ class _GalleryState extends State<Gallery> with SingleTickerProviderStateMixin {
   int selectedIndex = 0;
   TabController tabcontroller;
 
+  void getUserdata() async {
+    String auth = APIService.token + ":" + APIService.username;
+    var response;
+
+    await https.get(
+      "https://76a52a7707e7.ngrok.io/api/Profile/GetUserData",
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer " + auth,
+        HttpHeaders.contentTypeHeader: "application/json"
+      },
+    ).then((response) {
+      ;
+      if (response.statusCode == 200) {
+        setState(() {
+          var result = json.decode(json.decode(response.body.toString()));
+          Gallery.firstName = result["First_Name"];
+          Gallery.lastName = result["Last_Name"];
+          Gallery.image = result["ImageUrl"];
+          Gallery.startup = false;
+        });
+      }
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     tabcontroller = new TabController(vsync: this, length: 2);
+    if (Gallery.startup == true) {
+      getUserdata();
+    }
   }
 
   @override
@@ -83,7 +121,7 @@ class _GalleryState extends State<Gallery> with SingleTickerProviderStateMixin {
       ),
       body: new TabBarView(
         controller: tabcontroller,
-        children: <Widget>[new ph.Photos(), new ph.Photos()],
+        children: <Widget>[new ph.Photos(), new vd.Player()],
       ),
       drawer: Drawer(
         child: Maindrawer(),

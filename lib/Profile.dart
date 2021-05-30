@@ -56,158 +56,196 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Row(
-        children: <Widget>[
-          navbarItems(Icons.photo_album, 0),
-          navbarItems(Icons.sports_basketball, 1),
-          navbarItems(Icons.calendar_today, 2),
-          navbarItems(Icons.person, 3),
-        ],
-      ),
-      appBar: AppBar(
-        backgroundColor: kWhite,
-        textTheme: Theme.of(context).textTheme.apply(
-              bodyColor: Colors.grey,
-            ),
-        iconTheme: IconThemeData(color: Colors.black),
-        title: Padding(
-          padding: const EdgeInsets.fromLTRB(140, 0, 0, 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('ISA NEPAL',
-                      style: TextStyle(
-                          fontSize: 25.0, fontWeight: FontWeight.bold))),
-              CircleAvatar(
-                radius: 20,
-                backgroundImage: AssetImage('assets/isa.png'),
+        bottomNavigationBar: Row(
+          children: <Widget>[
+            navbarItems(Icons.photo_album, 0),
+            navbarItems(Icons.sports_basketball, 1),
+            navbarItems(Icons.calendar_today, 2),
+            navbarItems(Icons.person, 3),
+          ],
+        ),
+        appBar: AppBar(
+          backgroundColor: kWhite,
+          textTheme: Theme.of(context).textTheme.apply(
+                bodyColor: Colors.grey,
               ),
-            ],
+          iconTheme: IconThemeData(color: Colors.black),
+          title: Padding(
+            padding: const EdgeInsets.fromLTRB(140, 0, 0, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('ISA NEPAL',
+                        style: TextStyle(
+                            fontSize: 25.0, fontWeight: FontWeight.bold))),
+                CircleAvatar(
+                  radius: 20,
+                  backgroundImage: AssetImage('assets/isa.png'),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      drawer: Drawer(
-        child: Maindrawer(),
-      ),
-      body: start == true
-          ? Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 300, top: 10),
-                    child: Text(
-                      "Profile",
-                      style: TextStyle(
-                          fontFamily: 'Calibar',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30),
-                    ),
-                  ),
-                  profileImage(),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  textenable
-                      ? Padding(
-                          padding: const EdgeInsets.only(left: 280),
-                          child: Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    //textenable = false;
-                                    validFirstName =
-                                        validateText(firstnamecontroller.text);
-                                    validLastName =
-                                        validateText(lastnamecontroller.text);
-                                    validEmail = validateEmailTextField(
-                                        emailcontroller.text);
-                                    validAddress =
-                                        validateText(addresscontroller.text);
-                                    validGender =
-                                        validateText(gendercontroller.text);
-                                    validAge = validateText(agecontroller.text);
-                                    validDob = validateDobTextField(
-                                        dateofbirthcontroller.text);
-                                    validPhoneNo =
-                                        validateText(phonenocontroller.text);
-                                    if (validFirstName &&
-                                        validLastName &&
-                                        validEmail &&
-                                        validAddress &&
-                                        validGender &&
-                                        validAge &&
-                                        validDob &&
-                                        validPhoneNo) {
-                                      _userDetailModel.firstName =
-                                          firstnamecontroller.text;
-                                      _userDetailModel.lastName =
-                                          lastnamecontroller.text;
-                                      _userDetailModel.email =
-                                          emailcontroller.text;
-                                      _userDetailModel.address =
-                                          addresscontroller.text;
-                                      _userDetailModel.gender =
-                                          gendercontroller.text;
-                                      _userDetailModel.age =
-                                          int.parse(agecontroller.text);
-                                      _userDetailModel.dateofBirth =
-                                          dateofbirthcontroller.text;
-                                      _userDetailModel.phoneNo =
-                                          int.parse(phonenocontroller.text);
+        drawer: Drawer(
+          child: Maindrawer(),
+        ),
+        body: Builder(
+          builder: (context) => start == true
+              ? Center(child: CircularProgressIndicator())
+              : SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 300, top: 10),
+                        child: Text(
+                          "Profile",
+                          style: TextStyle(
+                              fontFamily: 'Calibar',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30),
+                        ),
+                      ),
+                      profileImage(),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      textenable
+                          ? Padding(
+                              padding: const EdgeInsets.only(left: 280),
+                              child: Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        validFirstName = validateText(
+                                            firstnamecontroller.text);
+                                        validLastName = validateText(
+                                            lastnamecontroller.text);
+                                        validEmail = validateEmailTextField(
+                                            emailcontroller.text);
+                                        validAddress = validateText(
+                                            addresscontroller.text);
+                                        validGender =
+                                            validateText(gendercontroller.text);
+                                        validAge =
+                                            validateText(agecontroller.text);
+                                        validDob = validateDobTextField(
+                                            dateofbirthcontroller.text);
+                                        validPhoneNo = validateText(
+                                            phonenocontroller.text);
+                                        if (validFirstName &&
+                                            validLastName &&
+                                            validEmail &&
+                                            validAddress &&
+                                            validGender &&
+                                            validAge &&
+                                            validDob &&
+                                            validPhoneNo) {
+                                          _userDetailModel.firstName =
+                                              firstnamecontroller.text;
+                                          _userDetailModel.lastName =
+                                              lastnamecontroller.text;
+                                          _userDetailModel.email =
+                                              emailcontroller.text;
+                                          _userDetailModel.address =
+                                              addresscontroller.text;
+                                          _userDetailModel.gender =
+                                              gendercontroller.text;
+                                          _userDetailModel.age =
+                                              int.parse(agecontroller.text);
+                                          _userDetailModel.dateofBirth =
+                                              dateofbirthcontroller.text;
+                                          _userDetailModel.phoneNo =
+                                              int.parse(phonenocontroller.text);
 
-                                      apiService
-                                          .updateUser(_userDetailModel)
-                                          .then((value) {
-                                        if (value.updated) {
-                                          getProfileData();
-                                          final snackBar = SnackBar(
-                                              content: Text("Profile Updated"));
-                                          // ignore: deprecated_member_use
-                                          Scaffold.of(context)
-                                              .showSnackBar(snackBar);
-                                        } else {
-                                          final snackBar = SnackBar(
-                                              content: Text(
-                                                  "Failed to update profile!"));
-                                          // ignore: deprecated_member_use
-                                          Scaffold.of(context)
-                                              .showSnackBar(snackBar);
+                                          apiService
+                                              .updateUser(_userDetailModel)
+                                              .then((value) {
+                                            if (value.updated) {
+                                              getProfileData();
+                                              setState(() {
+                                                textenable = false;
+                                              });
+                                              final snackBar = SnackBar(
+                                                  content:
+                                                      Text("Profile Updated"));
+                                              // ignore: deprecated_member_use
+                                              Scaffold.of(context)
+                                                  .showSnackBar(snackBar);
+                                            } else {
+                                              final snackBar = SnackBar(
+                                                  content: Text(
+                                                      "Failed to update profile!"));
+                                              // ignore: deprecated_member_use
+                                              Scaffold.of(context)
+                                                  .showSnackBar(snackBar);
+                                            }
+                                          });
                                         }
                                       });
-                                    }
-                                  });
-                                },
-                                child: Container(
-                                  height: 40,
-                                  width: MediaQuery.of(context).size.width / 7,
-                                  decoration: BoxDecoration(
-                                      // color: kWhite,
-                                      // border: Border(
-                                      //     top: BorderSide(width: 3.0, color: Colors.grey),
-                                      //     bottom: BorderSide(
-                                      //       width: 5.0,
-                                      //       //color: index == selectedIndex ? Colors.blue : Colors.white),
-                                      //     )),
+                                    },
+                                    child: Container(
+                                      height: 40,
+                                      width:
+                                          MediaQuery.of(context).size.width / 7,
+                                      decoration: BoxDecoration(
+                                          // color: kWhite,
+                                          // border: Border(
+                                          //     top: BorderSide(width: 3.0, color: Colors.grey),
+                                          //     bottom: BorderSide(
+                                          //       width: 5.0,
+                                          //       //color: index == selectedIndex ? Colors.blue : Colors.white),
+                                          //     )),
+                                          ),
+                                      child: Icon(
+                                        Icons.save,
+                                        size: 30,
+                                        color: Colors.blue,
+                                        // color:
+                                        //     index == selectedIndex ? Colors.blue : Colors.lightBlue.shade200,
                                       ),
-                                  child: Icon(
-                                    Icons.save,
-                                    size: 30,
-                                    color: Colors.blue,
-                                    // color:
-                                    //     index == selectedIndex ? Colors.blue : Colors.lightBlue.shade200,
+                                    ),
                                   ),
-                                ),
-                              ),
-                              GestureDetector(
+                                  GestureDetector(
+                                    onTap: () {
+                                      getProfileData();
+                                      setState(() {
+                                        textenable = false;
+                                        start = true;
+                                      });
+                                    },
+                                    child: Container(
+                                      height: 40,
+                                      width:
+                                          MediaQuery.of(context).size.width / 7,
+                                      decoration: BoxDecoration(
+                                          // color: kWhite,
+                                          // border: Border(
+                                          //     top: BorderSide(width: 3.0, color: Colors.grey),
+                                          //     bottom: BorderSide(
+                                          //       width: 5.0,
+                                          //       //color: index == selectedIndex ? Colors.blue : Colors.white),
+                                          //     )),
+                                          ),
+                                      child: Icon(
+                                        Icons.cancel,
+                                        size: 30,
+                                        color: Colors.blue,
+                                        // color:
+                                        //     index == selectedIndex ? Colors.blue : Colors.lightBlue.shade200,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ))
+                          : Padding(
+                              padding: const EdgeInsets.only(left: 300),
+                              child: GestureDetector(
                                 onTap: () {
-                                  getProfileData();
                                   setState(() {
-                                    textenable = false;
-                                    start = true;
+                                    textenable = true;
                                   });
                                 },
                                 child: Container(
@@ -223,319 +261,290 @@ class _ProfileState extends State<Profile> {
                                       //     )),
                                       ),
                                   child: Icon(
-                                    Icons.cancel,
+                                    Icons.edit,
                                     size: 30,
                                     color: Colors.blue,
                                     // color:
                                     //     index == selectedIndex ? Colors.blue : Colors.lightBlue.shade200,
                                   ),
                                 ),
-                              ),
-                            ],
-                          ))
-                      : Padding(
-                          padding: const EdgeInsets.only(left: 300),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                textenable = true;
-                              });
-                            },
-                            child: Container(
-                              height: 40,
-                              width: MediaQuery.of(context).size.width / 7,
-                              decoration: BoxDecoration(
-                                  // color: kWhite,
-                                  // border: Border(
-                                  //     top: BorderSide(width: 3.0, color: Colors.grey),
-                                  //     bottom: BorderSide(
-                                  //       width: 5.0,
-                                  //       //color: index == selectedIndex ? Colors.blue : Colors.white),
-                                  //     )),
-                                  ),
-                              child: Icon(
-                                Icons.edit,
-                                size: 30,
-                                color: Colors.blue,
-                                // color:
-                                //     index == selectedIndex ? Colors.blue : Colors.lightBlue.shade200,
                               ),
                             ),
-                          ),
-                        ),
-                  new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 30,
-                        ),
-                        new Flexible(
-                          child: Container(
-                            height: 60,
-                            child: new TextField(
-                                enabled: textenable,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontFamily: 'Calibar'),
-                                controller: firstnamecontroller,
-                                decoration: InputDecoration(
-                                    labelText: "First Name",
-                                    // labelStyle: TextStyle(
-                                    //     fontWeight: FontWeight.bold, fontSize: 20),
-                                    // hintText: hintText,
-                                    // enabledBorder: const OutlineInputBorder(
-                                    //     borderRadius:
-                                    //         BorderRadius.all(Radius.circular(5.0)),
-                                    //     borderSide:
-                                    //         const BorderSide(color: Colors.grey)),
-                                    errorText: validFirstName
-                                        ? null
-                                        : 'Please enter the name')),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20.0,
-                        ),
-                      ]),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 30,
-                        ),
-                        new Flexible(
-                          child: Container(
-                            height: 60,
-                            child: new TextField(
-                                enabled: textenable,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontFamily: 'Calibar'),
-                                controller: lastnamecontroller,
-                                decoration: InputDecoration(
-                                    labelText: "Last Name",
-                                    // labelStyle: TextStyle(
-                                    //     fontWeight: FontWeight.bold, fontSize: 20),
-                                    // hintText: hintText,
+                      new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            SizedBox(
+                              width: 30,
+                            ),
+                            new Flexible(
+                              child: Container(
+                                height: 60,
+                                child: new TextField(
+                                    enabled: textenable,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontFamily: 'Calibar'),
+                                    controller: firstnamecontroller,
+                                    decoration: InputDecoration(
+                                        labelText: "First Name",
+                                        // labelStyle: TextStyle(
+                                        //     fontWeight: FontWeight.bold, fontSize: 20),
+                                        // hintText: hintText,
+                                        // enabledBorder: const OutlineInputBorder(
+                                        //     borderRadius:
+                                        //         BorderRadius.all(Radius.circular(5.0)),
+                                        //     borderSide:
+                                        //         const BorderSide(color: Colors.grey)),
+                                        errorText: validFirstName
+                                            ? null
+                                            : 'Please enter the name')),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20.0,
+                            ),
+                          ]),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            SizedBox(
+                              width: 30,
+                            ),
+                            new Flexible(
+                              child: Container(
+                                height: 60,
+                                child: new TextField(
+                                    enabled: textenable,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontFamily: 'Calibar'),
+                                    controller: lastnamecontroller,
+                                    decoration: InputDecoration(
+                                        labelText: "Last Name",
+                                        // labelStyle: TextStyle(
+                                        //     fontWeight: FontWeight.bold, fontSize: 20),
+                                        // hintText: hintText,
 
-                                    errorText: validLastName
-                                        ? null
-                                        : 'Please enter Last Name')),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20.0,
-                        ),
-                      ]),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 30,
-                        ),
-                        new Flexible(
-                          child: Container(
-                            height: 60,
-                            child: new TextField(
-                                enabled: textenable,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontFamily: 'Calibar'),
-                                controller: emailcontroller,
-                                decoration: InputDecoration(
-                                    labelText: "Email",
-                                    // labelStyle: TextStyle(
-                                    //     fontWeight: FontWeight.bold, fontSize: 20),
-                                    // hintText: hintText,
+                                        errorText: validLastName
+                                            ? null
+                                            : 'Please enter Last Name')),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20.0,
+                            ),
+                          ]),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            SizedBox(
+                              width: 30,
+                            ),
+                            new Flexible(
+                              child: Container(
+                                height: 60,
+                                child: new TextField(
+                                    enabled: textenable,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontFamily: 'Calibar'),
+                                    controller: emailcontroller,
+                                    decoration: InputDecoration(
+                                        labelText: "Email",
+                                        // labelStyle: TextStyle(
+                                        //     fontWeight: FontWeight.bold, fontSize: 20),
+                                        // hintText: hintText,
 
-                                    errorText: validEmail ? null : emailtext)),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20.0,
-                        ),
-                      ]),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 30,
-                        ),
-                        new Flexible(
-                          child: Container(
-                            height: 60,
-                            child: new TextField(
-                                enabled: textenable,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontFamily: 'Calibar'),
-                                controller: addresscontroller,
-                                decoration: InputDecoration(
-                                    labelText: "Address",
-                                    // labelStyle: TextStyle(
-                                    //     fontWeight: FontWeight.bold, fontSize: 20),
-                                    // hintText: hintText,
+                                        errorText:
+                                            validEmail ? null : emailtext)),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20.0,
+                            ),
+                          ]),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            SizedBox(
+                              width: 30,
+                            ),
+                            new Flexible(
+                              child: Container(
+                                height: 60,
+                                child: new TextField(
+                                    enabled: textenable,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontFamily: 'Calibar'),
+                                    controller: addresscontroller,
+                                    decoration: InputDecoration(
+                                        labelText: "Address",
+                                        // labelStyle: TextStyle(
+                                        //     fontWeight: FontWeight.bold, fontSize: 20),
+                                        // hintText: hintText,
 
-                                    errorText: validAddress
-                                        ? null
-                                        : 'Please enter Address')),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20.0,
-                        ),
-                      ]),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 30,
-                        ),
-                        new Flexible(
-                          child: Container(
-                            height: 60,
-                            child: new TextField(
-                                enabled: textenable,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontFamily: 'Calibar'),
-                                controller: dateofbirthcontroller,
-                                decoration: InputDecoration(
-                                    labelText: "Date Of Birth",
-                                    // labelStyle: TextStyle(
-                                    //     fontWeight: FontWeight.bold, fontSize: 20),
-                                    hintText: "YYYY-MM-DD",
-                                    errorText: validDob ? null : dobtext)),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20.0,
-                        ),
-                      ]),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 30,
-                        ),
-                        new Flexible(
-                          child: Container(
-                            height: 60,
-                            child: new TextField(
-                                enabled: textenable,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontFamily: 'Calibar'),
-                                controller: phonenocontroller,
-                                decoration: InputDecoration(
-                                    labelText: "Phone Number",
-                                    // labelStyle: TextStyle(
-                                    //     fontWeight: FontWeight.bold, fontSize: 20),
-                                    // hintText: hintText,
+                                        errorText: validAddress
+                                            ? null
+                                            : 'Please enter Address')),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20.0,
+                            ),
+                          ]),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            SizedBox(
+                              width: 30,
+                            ),
+                            new Flexible(
+                              child: Container(
+                                height: 60,
+                                child: new TextField(
+                                    enabled: textenable,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontFamily: 'Calibar'),
+                                    controller: dateofbirthcontroller,
+                                    decoration: InputDecoration(
+                                        labelText: "Date Of Birth",
+                                        // labelStyle: TextStyle(
+                                        //     fontWeight: FontWeight.bold, fontSize: 20),
+                                        hintText: "YYYY-MM-DD",
+                                        errorText: validDob ? null : dobtext)),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20.0,
+                            ),
+                          ]),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            SizedBox(
+                              width: 30,
+                            ),
+                            new Flexible(
+                              child: Container(
+                                height: 60,
+                                child: new TextField(
+                                    enabled: textenable,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontFamily: 'Calibar'),
+                                    controller: phonenocontroller,
+                                    decoration: InputDecoration(
+                                        labelText: "Phone Number",
+                                        // labelStyle: TextStyle(
+                                        //     fontWeight: FontWeight.bold, fontSize: 20),
+                                        // hintText: hintText,
 
-                                    errorText: validPhoneNo
-                                        ? null
-                                        : 'Please enter Phone Number ')),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20.0,
-                        ),
-                      ]),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 25,
-                        ),
-                        new Flexible(
-                          child: Container(
-                            height: 60,
-                            width: 150,
-                            child: new TextField(
-                                enabled: textenable,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontFamily: 'Calibar'),
-                                controller: agecontroller,
-                                decoration: InputDecoration(
-                                    labelText: "Age",
-                                    // labelStyle: TextStyle(
-                                    //     fontWeight: FontWeight.bold, fontSize: 20),
-                                    // hintText: hintText,
+                                        errorText: validPhoneNo
+                                            ? null
+                                            : 'Please enter Phone Number ')),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20.0,
+                            ),
+                          ]),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            SizedBox(
+                              width: 25,
+                            ),
+                            new Flexible(
+                              child: Container(
+                                height: 60,
+                                width: 150,
+                                child: new TextField(
+                                    enabled: textenable,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontFamily: 'Calibar'),
+                                    controller: agecontroller,
+                                    decoration: InputDecoration(
+                                        labelText: "Age",
+                                        // labelStyle: TextStyle(
+                                        //     fontWeight: FontWeight.bold, fontSize: 20),
+                                        // hintText: hintText,
 
-                                    errorText:
-                                        validAge ? null : 'Please enter Age')),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 40.0,
-                        ),
-                        new Flexible(
-                          child: Container(
-                            height: 60,
-                            child: new TextField(
-                                enabled: textenable,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontFamily: 'Calibar'),
-                                controller: gendercontroller,
-                                decoration: InputDecoration(
-                                    labelText: "Gender",
-                                    // labelStyle: TextStyle(
-                                    //     fontWeight: FontWeight.bold, fontSize: 20),
-                                    // hintText: hintText,
+                                        errorText: validAge
+                                            ? null
+                                            : 'Please enter Age')),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 40.0,
+                            ),
+                            new Flexible(
+                              child: Container(
+                                height: 60,
+                                child: new TextField(
+                                    enabled: textenable,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontFamily: 'Calibar'),
+                                    controller: gendercontroller,
+                                    decoration: InputDecoration(
+                                        labelText: "Gender",
+                                        // labelStyle: TextStyle(
+                                        //     fontWeight: FontWeight.bold, fontSize: 20),
+                                        // hintText: hintText,
 
-                                    errorText: validGender
-                                        ? null
-                                        : 'Please enter Gender ')),
-                          ),
-                        ),
-                        SizedBox(width: 20),
-                      ]),
-                  SizedBox(
-                    height: 20,
+                                        errorText: validGender
+                                            ? null
+                                            : 'Please enter Gender ')),
+                              ),
+                            ),
+                            SizedBox(width: 20),
+                          ]),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            SizedBox(
+                              width: 30,
+                            ),
+                            SizedBox(
+                              width: 20.0,
+                            ),
+                          ])
+                    ],
                   ),
-                  new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 30,
-                        ),
-                        SizedBox(
-                          width: 20.0,
-                        ),
-                      ])
-                ],
-              ),
-            ),
-    );
+                ),
+        ));
   }
 
   Widget navbarItems(IconData icon, int index) {
@@ -663,6 +672,7 @@ class _ProfileState extends State<Profile> {
     if (image != null) {
       String imageData = base64Encode(image.readAsBytesSync());
       print(imageData);
+      Gallery.image = imageData;
       apiService.updatedProfileImage(imageData).then((value) {
         setState(() {
           if (!value) {
