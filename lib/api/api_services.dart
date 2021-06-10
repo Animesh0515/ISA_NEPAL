@@ -21,7 +21,7 @@ class APIService {
 
   // final storage = new FlutterSecureStorage();
   Future<LogingResponseModel> login(LoginRequestModel loginRequestModel) async {
-    String url = "https://76a52a7707e7.ngrok.io/api/Account/login";
+    String url = "https://b74b24cc3331.ngrok.io/api/Account/login";
     // Location currentLocation = window.location;
     // print(currentLocation.href);
     // var url = window.location.href;
@@ -58,7 +58,7 @@ class APIService {
 
   Future<SignupResponseModel> signup(
       SignupRequestModel signupRequestModel) async {
-    String url = "https://76a52a7707e7.ngrok.io/api/Account/Signup";
+    String url = "https://b74b24cc3331.ngrok.io/api/Account/Signup";
     try {
       // print(signupRequestModel.toJson());
       // print(jsonEncode(signupRequestModel.toJson()));
@@ -81,7 +81,7 @@ class APIService {
   Future<BookingTimeResponseModel> getTime(
       BookingTimeRequestModel bookingTimeRequestModel) async {
     String auth = token + ":" + username;
-    String url = "https://76a52a7707e7.ngrok.io/api/CourtBooking/GetTimeList";
+    String url = "https://b74b24cc3331.ngrok.io/api/CourtBooking/GetTimeList";
     try {
       final response = await https.post(url,
           headers: {
@@ -106,7 +106,7 @@ class APIService {
   Future<CourtBookingResponseModel> booking(
       CourtBookingRequestModel requestModel) async {
     String auth = token + ":" + username;
-    String url = "https://76a52a7707e7.ngrok.io/api/CourtBooking/BookCourt";
+    String url = "https://b74b24cc3331.ngrok.io/api/CourtBooking/BookCourt";
     try {
       final response = await https.post(url,
           headers: {
@@ -129,7 +129,7 @@ class APIService {
   Future<List> getCalendarData(int weekend) async {
     String auth = token + ":" + username;
     List<CalendarResponseModel> lst = [];
-    String url = "https://76a52a7707e7.ngrok.io/api/Calendar/GetData";
+    String url = "https://b74b24cc3331.ngrok.io/api/Calendar/GetData";
     try {
       final response = await https.post(url,
           headers: {
@@ -153,7 +153,7 @@ class APIService {
   Future<List<dynamic>> getPhotos() async {
     // ignore: deprecated_member_use
 
-    String url = "https://76a52a7707e7.ngrok.io/api/Gallery/GetPhotos";
+    String url = "https://b74b24cc3331.ngrok.io/api/Gallery/GetPhotos";
     String auth = token + ":" + username;
     try {
       var response = await https.get(
@@ -177,7 +177,7 @@ class APIService {
 
   Future<bool> updatedProfileImage(String imageurl) async {
     String auth = token + ":" + username;
-    String url = "https://76a52a7707e7.ngrok.io/api/Profile/UpdateImage";
+    String url = "https://b74b24cc3331.ngrok.io/api/Profile/UpdateImage";
     try {
       print(jsonEncode(imageurl));
       var response = await https.post(url,
@@ -199,7 +199,7 @@ class APIService {
 
   Future<UserDetailModel> getUserDetails() async {
     String auth = token + ":" + username;
-    String url = "https://76a52a7707e7.ngrok.io/api/Profile/GetUserDetails";
+    String url = "https://b74b24cc3331.ngrok.io/api/Profile/GetUserDetails";
 
     try {
       var response = await https.get(
@@ -233,7 +233,7 @@ class APIService {
 
   Future<UserUpdateResponseModel> updateUser(UserDetailModel userDetail) async {
     String auth = token + ":" + username;
-    String url = "https://76a52a7707e7.ngrok.io/api/Profile/UpdateUserDetails";
+    String url = "https://b74b24cc3331.ngrok.io/api/Profile/UpdateUserDetails";
     try {
       print(json.encode(userDetail.toJson()));
       var response = await https.post(url,
@@ -257,7 +257,7 @@ class APIService {
 
   Future<List> getBookings() async {
     String auth = token + ":" + username;
-    String url = "https://76a52a7707e7.ngrok.io/api/CourtBooking/GetBookings";
+    String url = "https://b74b24cc3331.ngrok.io/api/CourtBooking/GetBookings";
     try {
       var response = await https.get(
         url,
@@ -279,7 +279,7 @@ class APIService {
 
   Future<List> getNotifications() async {
     String url =
-        "https://76a52a7707e7.ngrok.io/api/Notification/GetNotification";
+        "https://b74b24cc3331.ngrok.io/api/Notification/GetNotification";
     //  await storage.read(key: 'token')
     String auth = token + ":" + username;
     try {
@@ -307,7 +307,7 @@ class APIService {
       TrainingBookingRequestModel requestModel) async {
     String auth = token + ":" + username;
     String url =
-        "https://76a52a7707e7.ngrok.io/api/TrainingBooking/BookTraining";
+        "https://b74b24cc3331.ngrok.io/api/TrainingBooking/BookTraining";
     try {
       final response = await https.post(url,
           headers: {
@@ -332,7 +332,7 @@ class APIService {
   Future<ChangeCredResponseModel> changeCredential(
       ChangeCredRequestModel requestModel) async {
     String auth = token + ":" + username;
-    String url = "https://76a52a7707e7.ngrok.io/api/Account/ChangeCredentail";
+    String url = "https://b74b24cc3331.ngrok.io/api/Account/ChangeCredentail";
     try {
       final response = await https.post(url,
           headers: {

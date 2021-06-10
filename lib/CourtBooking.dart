@@ -53,7 +53,7 @@ class _CourtBookingState extends State<CourtBooking> {
   void getStatus() async {
     String auth = APIService.token + ":" + APIService.username;
     var response = await https.get(
-        "https://76a52a7707e7.ngrok.io/api/CourtBooking/GetStatus",
+        "https://b74b24cc3331.ngrok.io/api/CourtBooking/GetStatus",
         headers: {
           HttpHeaders.authorizationHeader: "Bearer " + auth,
           HttpHeaders.contentTypeHeader: "application/json"

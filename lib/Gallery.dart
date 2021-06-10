@@ -30,7 +30,7 @@ class _GalleryState extends State<Gallery> with SingleTickerProviderStateMixin {
     var response;
 
     await https.get(
-      "https://76a52a7707e7.ngrok.io/api/Profile/GetUserData",
+      "https://b74b24cc3331.ngrok.io/api/Profile/GetUserData",
       headers: {
         HttpHeaders.authorizationHeader: "Bearer " + auth,
         HttpHeaders.contentTypeHeader: "application/json"

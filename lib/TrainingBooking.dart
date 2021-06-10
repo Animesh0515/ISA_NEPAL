@@ -32,7 +32,7 @@ class _TrainingBookingState extends State<TrainingBooking> {
   void getVenue() async {
     String auth = APIService.token + ":" + APIService.username;
     var response = await https.get(
-      "https://76a52a7707e7.ngrok.io/api/TrainingBooking/ShowVenue",
+      "https://b74b24cc3331.ngrok.io/api/TrainingBooking/ShowVenue",
       headers: {
         HttpHeaders.authorizationHeader: "Bearer " + auth,
         HttpHeaders.contentTypeHeader: "application/json"
@@ -50,7 +50,7 @@ class _TrainingBookingState extends State<TrainingBooking> {
   void getTime(String venue) async {
     String auth = APIService.token + ":" + APIService.username;
     var response = await https.post(
-        "https://76a52a7707e7.ngrok.io/api/TrainingBooking/ShowTime",
+        "https://b74b24cc3331.ngrok.io/api/TrainingBooking/ShowTime",
         headers: {
           HttpHeaders.authorizationHeader: "Bearer " + auth,
           HttpHeaders.contentTypeHeader: "application/json"
